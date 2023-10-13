@@ -42,9 +42,18 @@ public class ItemController {
         return "item/itemForm";
     }
 
+        /*현석 파트 시작*/
+        //날짜/시간 추가한 작업 시작 부분
     @PostMapping(value = "/admin/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
-                          Model model, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList){
+                          Model model, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList,
+                          @RequestParam("classStartDate") String classStartDateStr,
+                          @RequestParam("classEndDate") String classEndDateStr) {
+
+        itemFormDto.setClassStartDate(classStartDateStr);
+        itemFormDto.setClassEndDate(classEndDateStr);
+        //날짜/시간 추가한 작업 끝 부분
+        /*현석 파트 끝*/
 
         if(bindingResult.hasErrors()){
             return "item/itemForm";

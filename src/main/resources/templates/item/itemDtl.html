@@ -6,6 +6,15 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <!--현석 파트 시작-->
+    <!--달력 내용 추가한 시작 부분-->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--달력 내용 추가한 끝 부분-->
+    <!--현석 파트 끝-->
+
 <!--    깃 풀 리퀘스트 테스트2-->
     <style>
         table {
@@ -233,6 +242,21 @@
             height:auto;
             width:50%;
         }
+
+        /*현석 파트 시작*/
+        /*달력 내용 추가한 시작 부분*/
+        #calendar-widget {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 9999;
+        }
+        /*달력 내용 추가한 끝 부분*/
+        /*현석 파트 끝*/
+
     </style>
 </th:block>
 
@@ -268,6 +292,15 @@
             </div>
             <hr class="my-4">
 
+            <!--현석 파트 시작-->
+            <!--날짜/시간 작업 시작 부분-->
+            <div class="text-right mgt-50">
+                <h5>선택한 날짜</h5>
+                <div id="selected-date-display" class="font-weight-bold"></div>
+            </div>
+            <!--날짜/시간 작업 끝 부분-->
+            <!--현석 파트 끝-->
+
             <div class="text-right mgt-50">
                 <h5>결제 금액</h5>
                 <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
@@ -293,6 +326,42 @@
     <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
         <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
     </div>
+
+    <!--현석 파트 시작-->
+    <!--달력 내용 추가한 시작 부분-->
+    <div id="calendar-widget">
+        <h3>클래스 일정</h3>
+        <div id="datepicker"></div>
+
+    </div>
+    <script>
+
+        $(function() {
+
+            var classStartDate = "[[${item.classStartDate}]]";
+            var classEndDate = "[[${item.classEndDate}]]";
+
+            var startDate = new Date(classStartDate);
+            var endDate = new Date(classEndDate);
+
+
+
+
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate: startDate,
+                maxDate: endDate,
+                onSelect: function(dateText) {
+
+                    $("#selected-date-display").text(dateText);
+                    /*alert("선택한 날짜: " + dateText);*/
+
+                }
+            });
+        });
+    </script>
+    <!--달력 내용 추가한 끝 부분-->
+    <!--현석 파트 끝-->
 
 <!--   1011  리뷰버튼추가 -->
     <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
@@ -24,6 +25,13 @@ public class CartItem extends BaseEntity {
     private Item item;
 
     private int count;
+
+    /*현석 파트 시작*/
+    /*날짜/시간 구현 코드 시작 부분*/
+    @Column(name = "selected_date")
+    private LocalDate selectedDate; // 선택한 날짜를 저장할 필드
+    /*날짜/시간 구현 코드 끝 부분*/
+    /*현석 파트 끝*/
 
     public static CartItem createCartItem(Cart cart, Item item, int count) {
         CartItem cartItem = new CartItem();
