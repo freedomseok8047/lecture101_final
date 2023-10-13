@@ -8,8 +8,6 @@ import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +28,6 @@ public class ItemFormDto {
     @NotNull(message = "재고는 필수 입력 값입니다.")
     private Integer stockNumber;
 
-    //날짜/시간 추가한 작업 시작 부분
-    private String classStartDate; // 문자열로 날짜를 저장할 필드
-
-    private String classEndDate;
-    //날짜/시간 추가한 작업 끝 부분
-
     private ItemSellStatus itemSellStatus;
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
@@ -51,35 +43,5 @@ public class ItemFormDto {
     public static ItemFormDto of(Item item){
         return modelMapper.map(item,ItemFormDto.class);
     }
-
-
-    //날짜/시간 추가한 작업 시작 부분
-    public void setClassStartDate(String classStartDate) {
-        this.classStartDate = classStartDate;
-    }
-
-    // 종료 날짜를 문자열로 설정
-    public void setClassEndDate(String classEndDate) {
-        this.classEndDate = classEndDate;
-    }
-
-    // 필요한 경우 문자열에서 LocalDate로 변환하여 반환
-    public LocalDate getClassStartDateAsLocalDate() {
-        if (classStartDate != null) {
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-            return LocalDate.parse(classStartDate, dateFormatter);
-        }
-        return null;
-    }
-
-    // 필요한 경우 문자열에서 LocalDate로 변환하여 반환
-    public LocalDate getClassEndDateAsLocalDate() {
-        if (classEndDate != null) {
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-            return LocalDate.parse(classEndDate, dateFormatter);
-        }
-        return null;
-    }
-    //날짜/시간 추가한 작업 끝 부분
 
 }
