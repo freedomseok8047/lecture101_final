@@ -170,23 +170,44 @@
             <img th:src="${item.itemImgDtoList[0].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
         </div>
         <div class="wd50">
+            <!-- 카테고리 데이터 출력 -->
+            <div th:each="type : ${T(com.lecture101.constant.Category).values()}"
+                 th:if="${item.Category == type}"
+                 th:text="${type.displayName}">
+            </div>
+            <!-- //카테고리 데이터 출력 -->
+            <!-- 클래스 상태 출력 -->
             <span th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
-                판매중
+                강의중
             </span>
-            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15">
-                품절
+            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
+                종료된 강의
             </span>
+            <!-- //클래스 상태 출력 -->
+            <!-- 클래스 타입 출력 -->
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).ONE_TO_ONE}" class="badge badge-primary mgb-15">
+                1:1 강의
+            </span>
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).GROUP}" class="badge btn-danger mgb-15" >
+                그룹 강의
+            </span>
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).ONLINE}" class="badge btn-danger mgb-15" >
+                온라인 강의
+            </span>
+            <!-- //클래스 타입 출력 -->
+
+
             <div class="h4" th:text="${item.itemNm}"></div>
             <hr class="my-4">
 
             <div class="text-right">
                 <div class="h4 text-danger text-left">
                     <input type="hidden" th:value="${item.price}" id="price" name="price">
-                    <span th:text="${item.price}"></span>원
+                    <span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>원
                 </div>
                 <div class="input-group w-50">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">수량</span>
+                        <span class="input-group-text">인원</span>
                     </div>
                     <input type="number" name="count" id="count" class="form-control" value="1" min="1">
                 </div>
@@ -204,7 +225,9 @@
 
             <div class="text-right mgt-50">
                 <h5>결제 금액</h5>
-                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+                <!--금액 콤마 추가-->
+                <!--<h3 name="totalPrice" id="totalPrice" class="font-weight-bold" th:text="${#numbers.formatInteger(order.getTotalPrice, 3, 'COMMA')} + '원'"></h3>-->
+                <h3 class="card-title text-danger" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'">[[${item.price}]]</h3>
             </div>
 
             <div th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="text-right">
@@ -212,14 +235,14 @@
                 <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
             </div>
             <div th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="text-right">
-                <button type="button" class="btn btn-danger btn-lg">품절</button>
+                <button type="button" class="btn btn-danger btn-lg">종료된 강의</button>
             </div>
         </div>
     </div>
 
     <div class="jumbotron jumbotron-fluid mgt-30">
         <div class="container">
-            <h4 class="display-5">상품 상세 설명</h4>
+            <h4 class="display-5">클래스 안내</h4>
             <hr class="my-4">
             <p class="lead" th:text="${item.itemDetail}"></p>
         </div>
