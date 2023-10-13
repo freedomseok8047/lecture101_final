@@ -293,6 +293,7 @@
 
             <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).GROUP}" class="badge btn-danger mgb-15" >
                 그룹 강의
+            </span>
 
             <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
                 품절
@@ -331,9 +332,11 @@
 
             <div class="text-right mgt-50">
                 <h5>결제 금액</h5>
+
+                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
                 <!--금액 콤마 추가-->
                 <!--<h3 name="totalPrice" id="totalPrice" class="font-weight-bold" th:text="${#numbers.formatInteger(order.getTotalPrice, 3, 'COMMA')} + '원'"></h3>-->
-                <h3 class="card-title text-danger" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'">[[${item.price}]]</h3>
+                <!--<h3 class="card-title text-danger" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'">[[${item.price}]]</h3>-->
             </div>
 
             <div th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="text-right">
