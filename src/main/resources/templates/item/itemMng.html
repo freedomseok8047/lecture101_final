@@ -17,11 +17,13 @@
         function page(page){
             var searchDateType = $("#searchDateType").val();
             var searchSellStatus = $("#searchSellStatus").val();
+            var searchCategory = $("#searchCategory").val();
             var searchBy = $("#searchBy").val();
             var searchQuery = $("#searchQuery").val();
 
             location.href="/admin/items/" + page + "?searchDateType=" + searchDateType
             + "&searchSellStatus=" + searchSellStatus
+            + "&searchCategory=" + searchCategory
             + "&searchBy=" + searchBy
             + "&searchQuery=" + searchQuery;
         }
@@ -44,9 +46,10 @@
         <table class="table">
             <thead>
             <tr>
-                <td>상품아이디</td>
-                <td>상품명</td>
-                <td>상태</td>
+                <td>클래스 아이디</td>
+                <td>클래스명</td>
+                <td>카테고리</td>
+                <td>타입</td>
                 <td>등록자</td>
                 <td>등록일</td>
             </tr>
@@ -57,6 +60,18 @@
                 <td>
                     <a th:href="'/admin/item/'+${item.id}" th:text="${item.itemNm}"></a>
                 </td>
+                <!-- 카테고리 추가 -->
+                <td th:each="type : ${T(com.lecture101.constant.Category).values()}"
+                    th:if="${item.Category == type}"
+                    th:text="${#strings.isEmpty(type.displayName) ? '' : type.displayName}">
+                </td>
+                <!-- //카테고리 추가 -->
+                <!-- 클래스 타입 추가 -->
+                <td th:each="type : ${T(com.lecture101.constant.LectureType).values()}"
+                    th:if="${item.lectureType == type}"
+                    th:text="${type.description}">
+                </td>
+                <!-- //클래스 타입 추가 -->
                 <td th:text="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
                 <td th:text="${item.createdBy}"></td>
                 <td th:text="${item.regTime}"></td>
@@ -94,11 +109,20 @@
                 <option value="1m">1개월</option>
                 <option value="6m">6개월</option>
             </select>
+            <!-- 클래스 상태 -->
             <select th:field="*{searchSellStatus}" class="form-control" style="width:auto;">
-                <option value="">판매상태(전체)</option>
-                <option value="SELL">판매</option>
-                <option value="SOLD_OUT">품절</option>
+                <option value="">강의상태(전체)</option>
+                <option value="SELL">강의중</option>
+                <option value="SOLD_OUT">종료된 강의</option>
             </select>
+            <!-- //클래스 상태 -->
+            <!-- 카테고리 셀렉트 추가 -->
+            <select th:field="*{searchCategory}" class="form-control" style="width:auto;">
+                <option value="">카테고리(전체)</option>
+                <option th:each="category : ${T(com.lecture101.constant.Category).values()}"
+                        th:value="${category}" th:text="${category.displayName}"></option>
+            </select>
+            <!-- //카테고리 셀렉트 추가 -->
             <select th:field="*{searchBy}" class="form-control" style="width:auto;">
                 <option value="itemNm">상품명</option>
                 <option value="createdBy">등록자</option>

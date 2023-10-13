@@ -1,6 +1,8 @@
 package com.lecture101.entity;
 
+import com.lecture101.constant.Category;
 import com.lecture101.constant.ItemSellStatus;
+import com.lecture101.constant.LectureType;
 import com.lecture101.dto.ItemFormDto;
 import com.lecture101.exception.OutOfStockException;
 import lombok.Getter;
@@ -20,23 +22,29 @@ public class Item extends BaseEntity {
     @Id
     @Column(name="item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;       //상품 코드
+    private Long id;       // 클래스 코드
 
     @Column(nullable = false, length = 50)
-    private String itemNm; //상품명
+    private String itemNm; //클래스명
 
     @Column(name="price", nullable = false)
     private int price; //가격
 
     @Column(nullable = false)
-    private int stockNumber; //재고수량
+    private int stockNumber; //인원수
 
     @Lob
     @Column(nullable = false)
     private String itemDetail; //상품 상세 설명
 
     @Enumerated(EnumType.STRING)
-    private ItemSellStatus itemSellStatus; //상품 판매 상태
+    private ItemSellStatus itemSellStatus; // 강의 상태
+
+    @Enumerated(EnumType.STRING)
+    private LectureType lectureType; // 클래스 타입
+
+    @Enumerated(EnumType.STRING)
+    private Category category; // 카테고리판매 상태
 
     //날짜/시간 추가한 작업 시작 부분
     @Column(name = "class_start_date")
@@ -52,6 +60,12 @@ public class Item extends BaseEntity {
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
+
+        // 클래스 타입
+        this.lectureType = itemFormDto.getLectureType();
+        // 카테고리
+        this.category = itemFormDto.getCategory();
+
         //날짜/시간 추가한 작업 시작 부분
         this.classStartDate = itemFormDto.getClassStartDateAsLocalDate();
         this.classEndDate = itemFormDto.getClassEndDateAsLocalDate();
