@@ -6,13 +6,12 @@
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
 
-    <!--현석 파트 시작-->
     <!--날짜/시간 추가한 작업 시작 부분-->
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- jQuery UI CDN -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function() {
@@ -44,7 +43,6 @@
         });
     </script>
     <!--날짜/시간 추가한 작업 끝 부분-->
-    <!--현석 파트 끝-->
 
     <script th:inline="javascript">
         $(document).ready(function(){
@@ -101,7 +99,6 @@
 
         <input type="hidden" th:field="*{id}">
 
-        <!--lecture101_MK_파트 시작-->
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">클래스 명</span>
@@ -122,7 +119,6 @@
         <!-- //카테고리 선택 -->
 
         <!-- 클래스 상태 선택 -->
-
         <div class="form-group">
             <select th:field="*{itemSellStatus}" class="custom-select">
                 <option value="">클래스 상태 선택</option>
@@ -145,9 +141,6 @@
         <p th:if="${#fields.hasErrors('lectureType')}" th:errors="*{lectureType}" class="fieldError">Incorrect data</p>
         <!-- //클래스 타입 선택-->
 
-        <!--lecture101_MK_파트 끝-->
-
-        <!--현석 파트 시작-->
         <!--날짜/시간 추가한 작업 시작 부분-->
         <!-- 날짜 선택 버튼 -->
         <!-- 시작 날짜 선택 -->
@@ -159,14 +152,13 @@
         </div>
 
         <!-- 종료 날짜 선택 -->
-        <div class="input-group">
+      <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">종료 날짜</span>
             </div>
             <input type="text" id="classEndDate" name="classEndDate" class="form-control" placeholder="종료 날짜를 선택해주세요">
         </div>
         <!--날짜/시간 추가한 작업 끝 부분-->
-        <!--현석 파트 끝-->
 
         <div class="input-group">
             <div class="input-group-prepend">

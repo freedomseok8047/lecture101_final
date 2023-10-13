@@ -48,7 +48,6 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Category category; // 카테고리판매 상태
 
-    /*현석 파트 시작*/
     //날짜/시간 추가한 작업 시작 부분
     @Column(name = "class_start_date")
     private LocalDate classStartDate;
@@ -69,22 +68,15 @@ public class Item extends BaseEntity {
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
 
-        /*lecture101_MK_파트 시작*/
-
         // 클래스 타입
         this.lectureType = itemFormDto.getLectureType();
         // 카테고리
         this.category = itemFormDto.getCategory();
 
-        /*lecture101_MK_파트 끝*/
-
-
-        /*현석 파트 시작*/
         //날짜/시간 추가한 작업 시작 부분
         this.classStartDate = itemFormDto.getClassStartDateAsLocalDate();
         this.classEndDate = itemFormDto.getClassEndDateAsLocalDate();
         //날짜/시간 추가한 작업 끝 부분
-        /*현석 파트 끝*/
     }
 
     public void removeStock(int stockNumber){

@@ -1,5 +1,6 @@
 package com.lecture101.repository;
 
+import com.lecture101.constant.Category;
 import com.lecture101.constant.ItemSellStatus;
 import com.lecture101.dto.ItemSearchDto;
 import com.lecture101.dto.MainItemDto;
@@ -29,6 +30,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
     private BooleanExpression searchSellStatusEq(ItemSellStatus searchSellStatus){
         return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
+    }
+
+    // 클래스 리스트에서 카테고리로 검색 추가
+    private BooleanExpression searchCategoryEq(Category searchCategory){
+        return searchCategory == null ? null : QItem.item.category.eq(searchCategory);
     }
 
     private BooleanExpression regDtsAfter(String searchDateType){
@@ -94,6 +100,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .select(
                         new QMainItemDto(
                                 item.id,
+                                item.category,
                                 item.itemNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,
