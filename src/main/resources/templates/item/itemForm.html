@@ -96,17 +96,56 @@
     <form role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
 
         <p class="h2">
-            상품 등록
+            클래스 등록
         </p>
 
         <input type="hidden" th:field="*{id}">
 
+        <!--lecture101_MK_파트 시작-->
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">클래스 명</span>
+            </div>
+            <input type="text" th:field="*{itemNm}" class="form-control" placeholder="클래스명을 입력해 주세요">
+        </div>
+        <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
+
+        <!-- 카테고리 선택 -->
         <div class="form-group">
-            <select th:field="*{itemSellStatus}" class="custom-select">
-                <option value="SELL">판매중</option>
-                <option value="SOLD_OUT">품절</option>
+            <select th:field="*{category}" class="custom-select">
+                <option value="">카테고리 선택</option>
+                <option th:each="category : ${T(com.lecture101.constant.Category).values()}"
+                        th:value="${category}" th:text="${category.displayName}"></option>
             </select>
         </div>
+        <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="fieldError">Incorrect data</p>
+        <!-- //카테고리 선택 -->
+
+        <!-- 클래스 상태 선택 -->
+
+        <div class="form-group">
+            <select th:field="*{itemSellStatus}" class="custom-select">
+                <option value="">클래스 상태 선택</option>
+                <option value="SELL">강의중</option>
+                <option value="SOLD_OUT">종료된 강의</option>
+            </select>
+        </div>
+        <p th:if="${#fields.hasErrors('itemSellStatus')}" th:errors="*{itemSellStatus}" class="fieldError">Incorrect data</p>
+        <!-- //클래스 상태 선택 -->
+
+        <!-- 클래스 타입 선택-->
+        <div class="form-group">
+            <select th:field="*{lectureType}" class="custom-select">
+                <option value="">클래스 타입 선택</option>
+                <option value="ONE_TO_ONE">1:1 강의</option>
+                <option value="GROUP">그룹 강의</option>
+                <option value="ONLINE">온라인 강의</option>
+            </select>
+        </div>
+        <p th:if="${#fields.hasErrors('lectureType')}" th:errors="*{lectureType}" class="fieldError">Incorrect data</p>
+        <!-- //클래스 타입 선택-->
+
+        <!--lecture101_MK_파트 끝-->
 
         <!--현석 파트 시작-->
         <!--날짜/시간 추가한 작업 시작 부분-->
@@ -129,15 +168,6 @@
         <!--날짜/시간 추가한 작업 끝 부분-->
         <!--현석 파트 끝-->
 
-
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">상품명</span>
-            </div>
-            <input type="text" th:field="*{itemNm}" class="form-control" placeholder="상품명을 입력해주세요">
-        </div>
-        <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
-
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">가격</span>
@@ -148,7 +178,7 @@
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">재고</span>
+                <span class="input-group-text">인원수</span>
             </div>
             <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">
         </div>
@@ -156,7 +186,7 @@
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">상품 상세 내용</span>
+                <span class="input-group-text">클래스 소개</span>
             </div>
             <textarea class="form-control" aria-label="With textarea" th:field="*{itemDetail}"></textarea>
         </div>
