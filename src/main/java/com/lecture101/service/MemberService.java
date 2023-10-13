@@ -45,4 +45,9 @@ public class MemberService implements UserDetailsService {
                 .build();
     }
 
+    //1011 ktb 수정
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
 }
