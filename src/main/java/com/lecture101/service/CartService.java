@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate; //날짜 관련 코드
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,12 @@ public class CartService {
             savedCartItem.addCount(cartItemDto.getCount());
             return savedCartItem.getId();
         } else {
-            CartItem cartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount());
+
+            // 날짜 관련 코드
+            LocalDate selectedDate = LocalDate.parse(cartItemDto.getSelectedDate());
+            cartItemDto.setSelectedDate(String.valueOf(selectedDate));
+
+            CartItem cartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount(), selectedDate); // 날짜 관련 코드
             cartItemRepository.save(cartItem);
             return cartItem.getId();
         }

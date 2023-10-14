@@ -56,9 +56,16 @@
                     <a th:href="'/item/' +${item.id}" class="text-dark">
                         <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemNm}" height="400">
                         <div class="card-body">
+                            <!-- 카테고리 출력 -->
+                            <div th:each="type : ${T(com.lecture101.constant.Category).values()}"
+                                 th:if="${item.Category != null and item.Category == type}"
+                                 th:text="${type.displayName}">
+                            </div>
+                            <!-- //카테고리 출력 -->
                             <h4 class="card-title">[[${item.itemNm}]]</h4>
                             <p class="card-text">[[${item.itemDetail}]]</p>
-                            <h3 class="card-title text-danger">[[${item.price}]]원</h3>
+                            <!-- 금액 콤마 -->
+                            <h3 class="card-title text-danger" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'">[[${item.price}]]</h3>
                         </div>
                     </a>
                 </div>

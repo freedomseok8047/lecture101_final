@@ -5,6 +5,7 @@ import com.lecture101.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
@@ -20,5 +21,6 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
             "order by ci.regTime desc"
             )
     List<CartDetailDto> findCartDetailDtoList(Long cartId);
+    List<CartItem> findBySelectedDate(LocalDate selectedDate);
 
 }

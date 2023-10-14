@@ -8,17 +8,117 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
+    <!--현석 파트 시작-->
     <!--달력 내용 추가한 시작 부분-->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!--달력 내용 추가한 끝 부분-->
+    <!--현석 파트 끝-->
+
+    <!--    깃 풀 리퀘스트 테스트2-->
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        td:nth-child(1) {
+            font-weight: bold;
+        }
+        td:nth-child(2) {
+            color: #555;
+        }
+        td:nth-child(3) a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        td:nth-child(3) a:hover {
+            text-decoration: underline;
+        }
+    </style>
 
 </head>
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script th:inline="javascript">
+
+        /*<![CDATA[*/
+        var userName = /*[[${member.name}]]*/ 'defaultUserName'; // 사용자 이름
+        /*]]>*/
+
+        const commentWrite = () => {
+            const contents = document.getElementById("commentContents").value;
+            const id = [[${item.id}]];
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
+
+            $.ajax({
+                type: "post",
+                url: "/comment/save",
+                data: {
+                    "commentWriter": userName,
+                    "commentContents": contents,
+                    "itemId": id
+                },
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+
+                    // 새로운 댓글만 테이블에 추가.
+                    addCommentToTable(res);
+
+                    document.getElementById('commentContents').value = '';
+                },
+                error: function (err) {
+                    console.log("요청실패", err);
+                    if(err.status === 401) {
+                        alert('로그인이 필요합니다.');
+                    }
+                }
+            });
+        }
+
+        //리뷰 테이블 한 행씩 추가하기위한 스크립트
+        const addCommentToTable = (comment) => {
+            const table = document.getElementById('comment-list');
+            // insertRow(-1); = 테이블 젤 위에 행이 생성이 됨
+            // insertRow(0); = 테이블 젤 아래에 행이 생성이 됨
+            const newRow = table.insertRow(0);
+
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            const cell3 = newRow.insertCell(2);
+            const cell4 = newRow.insertCell(3);
+
+
+            cell1.innerHTML = comment.commentWriter;
+            cell2.innerHTML = comment.commentContents;
+            cell3.innerHTML = `<a href="/comment/edit/${comment.id}">수정</a>`;
+            cell4.innerHTML = `<a href="/comment/delete/${comment.id}" class="btn btn-danger">삭제</a>`;
+        };
+
+        function confirmDelete() {
+            return window.confirm('정말로 이 댓글을 삭제하시겠습니까?');
+        }
+
+
+
+
         $(document).ready(function(){
 
             calculateToalPrice();
@@ -42,6 +142,7 @@
             var paramData = {
                 itemId : $("#itemId").val(),
                 count : $("#count").val(),
+                selectedDate: $("#selectedDate").text(),
 
             };
 
@@ -83,6 +184,7 @@
             var paramData = {
                 itemId : $("#itemId").val(),
                 count : $("#count").val(),
+                selectedDate: $("#selectedDate").text(),
 
             };
 
@@ -117,6 +219,9 @@
         }
 
     </script>
+
+
+
 </th:block>
 
 <!-- 사용자 CSS 추가 -->
@@ -145,6 +250,7 @@
             width: 50%;
         }
 
+        /*현석 파트 시작*/
         /*달력 내용 추가한 시작 부분*/
        #calendar-widget {
             position: absolute;
@@ -156,6 +262,7 @@
             z-index: 9999;
         }
         /*달력 내용 추가한 끝 부분*/
+        /*현석 파트 끝*/
 
     </style>
 
@@ -170,23 +277,49 @@
             <img th:src="${item.itemImgDtoList[0].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
         </div>
         <div class="wd50">
+            <!-- 카테고리 데이터 출력 -->
+            <div th:each="type : ${T(com.lecture101.constant.Category).values()}"
+                 th:if="${item.Category == type}"
+                 th:text="${type.displayName}">
+            </div>
+            <!-- //카테고리 데이터 출력 -->
+            <!-- 클래스 상태 출력 -->
             <span th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
-                판매중
+                강의중
             </span>
-            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15">
+            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
+                종료된 강의
+            </span>
+            <!-- //클래스 상태 출력 -->
+            <!-- 클래스 타입 출력 -->
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).ONE_TO_ONE}" class="badge badge-primary mgb-15">
+                1:1 강의
+            </span>
+
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).GROUP}" class="badge btn-danger mgb-15" >
+                그룹 강의
+            </span>
+
+            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
                 품절
             </span>
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).ONLINE}" class="badge btn-danger mgb-15" >
+                온라인 강의
+            </span>
+                <!-- //클래스 타입 출력 -->
+                <!--lecture101_MK_ 파트 끝-->
+
             <div class="h4" th:text="${item.itemNm}"></div>
             <hr class="my-4">
 
             <div class="text-right">
                 <div class="h4 text-danger text-left">
                     <input type="hidden" th:value="${item.price}" id="price" name="price">
-                    <span th:text="${item.price}"></span>원
+                    <span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>원
                 </div>
                 <div class="input-group w-50">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">수량</span>
+                        <span class="input-group-text">인원</span>
                     </div>
                     <input type="number" name="count" id="count" class="form-control" value="1" min="1">
                 </div>
@@ -198,13 +331,17 @@
             <!--날짜/시간 작업 시작 부분-->
             <div class="text-right mgt-50">
                 <h5>선택한 날짜</h5>
-                <div id="selected-date-display" class="font-weight-bold"></div>
+                <div id="selectedDate" class="font-weight-bold"></div>
             </div>
             <!--날짜/시간 작업 끝 부분-->
 
             <div class="text-right mgt-50">
                 <h5>결제 금액</h5>
+
                 <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+                <!--금액 콤마 추가-->
+                <!--<h3 name="totalPrice" id="totalPrice" class="font-weight-bold" th:text="${#numbers.formatInteger(order.getTotalPrice, 3, 'COMMA')} + '원'"></h3>-->
+                <!--<h3 class="card-title text-danger" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'">[[${item.price}]]</h3>-->
             </div>
 
             <div th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="text-right">
@@ -212,14 +349,14 @@
                 <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
             </div>
             <div th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="text-right">
-                <button type="button" class="btn btn-danger btn-lg">품절</button>
+                <button type="button" class="btn btn-danger btn-lg">종료된 강의</button>
             </div>
         </div>
     </div>
 
     <div class="jumbotron jumbotron-fluid mgt-30">
         <div class="container">
-            <h4 class="display-5">상품 상세 설명</h4>
+            <h4 class="display-5">클래스 안내</h4>
             <hr class="my-4">
             <p class="lead" th:text="${item.itemDetail}"></p>
         </div>
@@ -250,6 +387,8 @@
 
 
 
+            // 날짜 관련 코드
+            /*<input type="hidden" id="selectedDateInput" name="selectedDate" />*/
 
             $("#datepicker").datepicker({
                 dateFormat: "yy-mm-dd",
@@ -257,15 +396,87 @@
                 maxDate: endDate,
                 onSelect: function(dateText) {
 
-                    $("#selected-date-display").text(dateText);
-                    /*alert("선택한 날짜: " + dateText);*/
+                    $("#selectedDate").text(dateText);
+
+                    // 날짜 관련 코드
+                    /*$("#selectedDateInput").val(dateText);*/
 
                 }
             });
         });
     </script>
     <!--달력 내용 추가한 끝 부분-->
+    <!--현석 파트 끝-->
 
+    <!--   1011  리뷰버튼추가 -->
+    <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
+        <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
+    </div>
+
+    <div id="comment-write">
+        <input type="text" id="commentContents" placeholder="내용">
+        <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
+    </div>
+
+
+    <p><strong>Name:</strong> <span th:text="${member.name}"></span></p>
+
+
+
+    <table id="comment-list_1">
+        <tr>
+            <th>작성자</th>
+            <th>내용</th>
+            <th>작업</th>
+        </tr>
+    </table>
+    <table id="comment-list">
+        <tr th:each="comment : ${commentsPage.content}">
+            <td th:text="${comment.commentWriter}"></td>
+            <td th:text="${comment.commentContents}"></td>
+            <td>
+                <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 수정버튼 활성화-->
+                <a th:if="${member != null and comment.commentWriter == member.name}"
+                   th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}">수정</a>
+            </td>
+            <td>
+                <!-- 로그인한 사용자와 댓글 작성자가 일치하면 삭제 버튼 표시 -->
+                <a th:if="${member != null and comment.commentWriter == member.name}"
+                   th:href="@{/comment/delete/{commentId}(commentId=${comment.id})}"
+                   class="btn btn-danger delete-comment"
+                   data-comment-id="${comment.id}"
+                   onclick="return confirmDelete()">삭제</a>
+
+            </td>
+
+        </tr>
+    </table>
+
+    <!--    페이징기능 부분-->
+    <div>
+        <nav>
+            <ul style="list-style-type: none; padding: 0;">
+                <li th:if="${commentsPage.number > 0}" style="display: inline-block; margin-right: 5px;">
+                    <a th:href="@{/item/{itemId}(itemId=${item.id},page=${commentsPage.number - 1})}">Previous</a>
+
+                </li>
+
+                <li th:each="pageNumber : ${#numbers.sequence(0, commentsPage.totalPages-1)}" style="display: inline-block; margin-right: 5px;">
+                    <a th:href="@{/item/{itemId}(itemId=${item.id},page=${pageNumber})}"
+                       th:text="${pageNumber + 1}">1</a>
+                </li>
+
+                <li th:if="${commentsPage.number + 1 < commentsPage.totalPages}" style="display: inline-block; margin-right: 5px;">
+                    <a th:href="@{/item/{itemId}(itemId=${item.id},page=${commentsPage.number + 1})}">Next</a>
+
+                </li>
+            </ul>
+        </nav>
+
+
+
+
+    </div>
 
 </div>
 
