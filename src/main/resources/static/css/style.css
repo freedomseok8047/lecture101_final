@@ -1,0 +1,156 @@
+/* --------------------------*/
+/* common css
+/* --------------------------*/
+
+/* Header */
+.header .navbar-brand {
+    font-weight: 600;
+}
+
+.header .bg-primary {
+    position: fixed;
+    top:0;
+    width: 100%;
+    padding: 0.8em 2em;
+    background: rgba(0,0, 0, 0.8)!important;
+    z-index: 1;
+}
+
+
+
+
+/* --------------------------*/
+/* main css
+/* --------------------------*/
+
+/* main visual */
+.main-visual {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    overflow: hidden;
+    background: #000;
+}
+.visual-fadein {
+    position:absolute;
+    top:0;
+    left:0;
+    margin:auto;
+    width: 100%;
+}
+.visual-fadein > div {
+    position:absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 520px;
+    -webkit-animation-name: fade;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 15s;
+    animation-name: fade;
+    animation-iteration-count: infinite;
+    animation-duration: 15s;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@-webkit-keyframes fade {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    33% {opacity: 1;}
+    53% {opacity: 0;}
+    100% {opacity: 0;}
+}
+@keyframes fade {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    33% {opacity: 1;}
+    53% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+#vf1 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/visual1.jpg") ;
+}
+#vf2 {
+    -webkit-animation-delay: -5s;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/visual3.jpg");
+}
+#vf3 {
+    -webkit-animation-delay: -10s;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/visual4.jpg") ;
+}
+
+.visual-text {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+}
+.visual-text p:first-child {
+    font-weight: 700;
+    font-size: 3em;
+}
+.visual-text p {
+    font-size: 1.2em;
+}
+
+.main-inner-cont {
+    margin: 60px 10% 0;
+}
+
+
+/* main card */
+.main-inner-cont .card {
+    border: none;
+}
+.main-inner-cont .card-body {
+    padding: 10px 1rem 2rem;
+}
+.main-inner-cont .card img {
+    border-radius: 20px;
+    height: 280px;
+}
+.main-inner-cont .card-body .card-ctg {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+.main-inner-cont .card-body .card-ctg span:first-child {
+    margin-right: 10px;
+}
+.main-inner-cont .card-body .card-ctg span:first-child:after {
+    content: '|';
+    display: inline-block;
+    padding-left: 15px;
+    color: #bbb;
+}
+.main-inner-cont .card-body .card-title {
+    color: #000;
+    margin-bottom: 0.4rem;
+}
+.main-inner-cont .card-body .card-price {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #2D3BBC;
+}
+
+
+
+
+
+
+
+/* --------------------------*/
+/* sub css
+/* --------------------------*/
+
+/* sub layout */
+.inner-cont {
+    margin: 80px 10%;
+    border:1px solid red
+}
+.inner-cont h2 {
+    margin-bottom: 20px;
+}

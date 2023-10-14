@@ -263,8 +263,8 @@
 
 </th:block>
 
-<div layout:fragment="content" style="margin-left:25%;margin-right:25%">
-
+<div layout:fragment="content">
+    <div class="inner-cont">
     <input type="hidden" id="itemId" th:value="${item.id}">
 
     <div class="d-flex">
@@ -290,13 +290,8 @@
             <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).ONE_TO_ONE}" class="badge badge-primary mgb-15">
                 1:1 강의
             </span>
-
             <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).GROUP}" class="badge btn-danger mgb-15" >
                 그룹 강의
-            </span>
-
-            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
-                품절
             </span>
             <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).ONLINE}" class="badge btn-danger mgb-15" >
                 온라인 강의
@@ -332,7 +327,6 @@
 
             <div class="text-right mgt-50">
                 <h5>결제 금액</h5>
-
                 <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
                 <!--금액 콤마 추가-->
                 <!--<h3 name="totalPrice" id="totalPrice" class="font-weight-bold" th:text="${#numbers.formatInteger(order.getTotalPrice, 3, 'COMMA')} + '원'"></h3>-->
@@ -400,10 +394,10 @@
     <!--현석 파트 끝-->
 
     <!--   1011  리뷰버튼추가 -->
-    <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
+    <!--<div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
         <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
     </div>
-
+-->
     <div id="comment-write">
         <input type="text" id="commentContents" placeholder="내용">
         <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
@@ -469,6 +463,7 @@
 
     </div>
 
+        </div>
 </div>
 
 </html>

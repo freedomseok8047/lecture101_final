@@ -90,12 +90,9 @@
 </th:block>
 
 <div layout:fragment="content">
-
-    <form role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
-
-        <p class="h2">
-            클래스 등록
-        </p>
+    <div class="inner-cont">
+        <h2>클래스 등록</h2>
+        <form role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
 
         <input type="hidden" th:field="*{id}">
 
@@ -172,7 +169,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">인원수</span>
             </div>
-            <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">
+            <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="총 인원수를 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="fieldError">Incorrect data</p>
 
@@ -212,7 +209,7 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
     </form>
-
+    </div>
 </div>
 
 </html>

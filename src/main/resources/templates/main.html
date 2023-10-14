@@ -35,13 +35,33 @@
 </th:block>
 
 <div layout:fragment="content">
-
-    <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active item">
-                <img class="d-block w-100 banner" src="https://user-images.githubusercontent.com/13268420/112147492-1ab76200-8c20-11eb-8649-3d2f282c3c02.png" alt="First slide">
+    <!-- main visual -->
+    <div class="main-visual">
+        <div class="visual-fadein">
+            <div id="vf3">
+                <div class="visual-text">
+                    <p>색다른 하루를 경험해 보세요.</p>
+                    <p>Lecture101은 초보자들도 쉽게 배울 수 있는 다양한 수업을 제공하고 있습니다.<br>
+                        하루의 수업을 통해 다양성을 경험하고 새로운 자신을 발견해 보세요.</p>
+                </div>
+            </div>
+            <div id="vf2">
+                <div class="visual-text">
+                    <p>나만의 취미를 만들어 보세요.</p>
+                    <p>Lecture101은 초보자들도 쉽게 배울 수 있는 다양한 수업을 제공하고 있습니다.<br>
+                        하루의 수업을 통해 다양성을 경험하고 새로운 자신을 발견해 보세요.</p>
+                </div>
+            </div>
+            <div id="vf1">
+                <div class="visual-text">
+                    <p>다양한 주제를 제공합니다.</p>
+                    <p>Lecture101은 초보자들도 쉽게 배울 수 있는 다양한 수업을 제공하고 있습니다.<br>
+                        하루의 수업을 통해 다양성을 경험하고 새로운 자신을 발견해 보세요.</p>
+                </div>
             </div>
         </div>
+        <!-- //main visual -->
+
     </div>
 
     <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
@@ -49,23 +69,29 @@
         <p class="h3 font-weight-bold" th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>
     </div>
 
-    <div class="row">
+    <div class="row main-inner-cont">
         <th:block th:each="item, status: ${items.getContent()}">
-            <div class="col-md-4 margin">
+            <div class="col-4">
                 <div class="card">
                     <a th:href="'/item/' +${item.id}" class="text-dark">
                         <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemNm}" height="400">
                         <div class="card-body">
                             <!-- 카테고리 출력 -->
-                            <div th:each="type : ${T(com.lecture101.constant.Category).values()}"
-                                 th:if="${item.Category == type}"
-                                 th:text="${type.displayName}">
+                            <div class="card-ctg">
+                                <span th:each="type : ${T(com.lecture101.constant.Category).values()}"
+                                      th:if="${item.Category == type}"
+                                      th:text="${type.displayName}">
+                                </span>
+                                <span th:each="type : ${T(com.lecture101.constant.LectureType).values()}"
+                                      th:if="${item.LectureType == type}"
+                                      th:text="${type.description}">
+                                </span>
                             </div>
                             <!-- //카테고리 출력 -->
                             <h4 class="card-title">[[${item.itemNm}]]</h4>
                             <p class="card-text">[[${item.itemDetail}]]</p>
                             <!-- 금액 콤마 -->
-                            <h3 class="card-title text-danger" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'">[[${item.price}]]</h3>
+                            <h3 class="card-price" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'">[[${item.price}]]</h3>
                         </div>
                     </a>
                 </div>

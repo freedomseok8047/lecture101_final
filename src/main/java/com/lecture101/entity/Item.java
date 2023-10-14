@@ -47,7 +47,7 @@ public class Item extends BaseEntity {
     private LectureType lectureType; // 클래스 타입
 
     @Enumerated(EnumType.STRING)
-    private Category category; // 카테고리판매 상태
+    private Category category; // 카테고리
 
     //날짜/시간 추가한 작업 시작 부분
     @Column(name = "class_start_date")
@@ -83,7 +83,7 @@ public class Item extends BaseEntity {
     public void removeStock(int stockNumber){
         int restStock = this.stockNumber - stockNumber;
         if(restStock<0){
-            throw new OutOfStockException("상품의 재고가 부족 합니다. (현재 재고 수량: " + this.stockNumber + ")");
+            throw new OutOfStockException("모집 인원수가 마감되었습니다. (총 인원수: " + this.stockNumber + ")");
         }
         this.stockNumber = restStock;
     }

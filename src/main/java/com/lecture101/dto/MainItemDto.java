@@ -2,6 +2,7 @@ package com.lecture101.dto;
 
 
 import com.lecture101.constant.Category;
+import com.lecture101.constant.LectureType;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,8 @@ public class MainItemDto {
     // 카테고리 추가
     private Category category;
 
+    private LectureType lectureType;
+
     private String itemNm;
 
     private String itemDetail;
@@ -23,9 +26,10 @@ public class MainItemDto {
     private Integer price;
 
     @QueryProjection
-    public MainItemDto(Long id, Category category, String itemNm, String itemDetail, String imgUrl,Integer price){
+    public MainItemDto(Long id, Category category, LectureType lectureType, String itemNm, String itemDetail, String imgUrl,Integer price){
         this.id = id;
         this.category = category;
+        this.lectureType = lectureType;
         this.itemNm = itemNm;
         this.itemDetail = itemDetail;
         this.imgUrl = imgUrl;
