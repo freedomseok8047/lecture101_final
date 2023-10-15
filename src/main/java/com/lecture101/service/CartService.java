@@ -18,9 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate; //날짜 관련 코드
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -91,11 +92,12 @@ public class CartService {
         return true;
     }
 
-    public void updateCartItemCount(Long cartItemId, int count){
+    public void updateCartItemCount(Long cartItemId, int count, LocalDate selectedDate){
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(EntityNotFoundException::new);
 
         cartItem.updateCount(count);
+        cartItem.setSelectedDate(selectedDate); // Update the selectedDate
     }
 
     public void deleteCartItem(Long cartItemId) {

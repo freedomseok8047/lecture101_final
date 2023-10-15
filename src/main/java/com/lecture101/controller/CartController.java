@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.time.LocalDate; // 날짜 관련 코드
+import java.time.LocalDate;
 import java.util.List;
+
+
+
 
 @Controller
 @RequiredArgsConstructor
@@ -64,7 +67,7 @@ public class CartController {
     }
 
     @PatchMapping(value = "/cartItem/{cartItemId}")
-    public @ResponseBody ResponseEntity updateCartItem(@PathVariable("cartItemId") Long cartItemId, int count, Principal principal){
+    public @ResponseBody ResponseEntity updateCartItem(@PathVariable("cartItemId") Long cartItemId, int count, @RequestParam String selectedDate, Principal principal){
 
         if(count <= 0){
             return new ResponseEntity<String>("최소 1개 이상 담아주세요", HttpStatus.BAD_REQUEST);
@@ -72,7 +75,10 @@ public class CartController {
             return new ResponseEntity<String>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
-        cartService.updateCartItemCount(cartItemId, count);
+        // 날짜 관련 코드
+        LocalDate parsedDate = LocalDate.parse(selectedDate);
+
+        cartService.updateCartItemCount(cartItemId, count, parsedDate);
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
 

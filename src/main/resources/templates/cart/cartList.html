@@ -17,6 +17,30 @@
             $("input[name=cartChkBox]").change( function(){
                 getOrderTotalPrice();
             });
+
+            fetchSelectedDates();
+
+            function fetchSelectedDates() {
+                $("tr th:each").each(function () {
+                    var cartItemId = $(this).data("cartItemId");
+                    var url = "/cartItem/selectedDate/" + cartItemId;
+
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        dataType: "json",
+                        cache: false,
+                        success: function (result, status) {
+                            $("#selectedDate_" + cartItemId).text(result.selectedDate);
+                        },
+                        error: function (jqXHR, status, error) {
+                            // Handle errors
+                            console.error("Error fetching selectedDate: " + error);
+                        }
+                    });
+                });
+            }
+
         });
 
         function getOrderTotalPrice(){
@@ -202,9 +226,10 @@
 
         <table class="table">
             <colgroup>
-                <col width="15%"/>
-                <col width="70%"/>
-                <col width="15%"/>
+                <col width="15%" />
+                <col width="55%" /> <!-- Reduce the width of the middle column to accommodate the new column -->
+                <col width="15%" />
+                <col width="15%" />
             </colgroup>
             <thead>
             <tr class="text-center">
@@ -252,6 +277,13 @@
                           name="totalPrice" th:text="${cartItem.price * cartItem.count} + '원'">
                     </span>
                 </td>
+
+                <td class="text-center align-middle">
+                    <span th:id="'selectedDate_' + ${cartItem.cartItemId}"
+                          name="selectedDate" th:text="${#dates.format(cartItem.selectedDate, 'yyyy-MM-dd')}" class="fs18 font-weight-light">
+                    </span>
+                </td>
+
             </tr>
             </tbody>
         </table>
