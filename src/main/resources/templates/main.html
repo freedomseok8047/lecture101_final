@@ -19,6 +19,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+            margin-bottom: 24px;
         }
         a:hover{
             text-decoration:none;
@@ -86,6 +87,16 @@
                                       th:if="${item.LectureType == type}"
                                       th:text="${type.description}">
                                 </span>
+                                <span th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge badge-primary">
+                                    강의중
+                                </span>
+                                <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge badge-secondary" >
+                                    종료된 강의
+                                </span>
+                                <!--<span th:each="type : ${T(com.lecture101.constant.ItemSellStatus).values()}"
+                                      th:if="${item.ItemSellStatus == type}"
+                                      th:text="${type.description}">
+                                </span>-->
                             </div>
                             <!-- //카테고리 출력 -->
                             <h4 class="card-title">[[${item.itemNm}]]</h4>
