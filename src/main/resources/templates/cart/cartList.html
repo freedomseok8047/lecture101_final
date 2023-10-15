@@ -231,6 +231,7 @@
                     </div>
                     <div class="align-self-center">
                         <span th:text="${cartItem.itemNm}" class="fs24 font-weight-bold"></span>
+                        <span th:text="${cartItem.selectedDate}" class="fs24 font-weight-bold"></span>
                         <div class="fs18 font-weight-light">
                             <span class="input-group mt-2">
                                 <span th:id="'price_' + ${cartItem.cartItemId}"
