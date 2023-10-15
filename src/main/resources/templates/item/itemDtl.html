@@ -250,6 +250,7 @@
             width: 50%;
         }
 
+
         /*현석 파트 시작*/
         /*달력 내용 추가한 시작 부분*/
        #calendar-widget {
@@ -330,7 +331,7 @@
 
             <!--날짜/시간 작업 시작 부분-->
             <div class="text-right mgt-50">
-                <h5>선택한 날짜</h5>
+                <h5>선택 일정</h5>
                 <div id="selectedDate" class="font-weight-bold"></div>
             </div>
             <!--날짜/시간 작업 끝 부분-->
@@ -356,7 +357,7 @@
 
     <div class="jumbotron jumbotron-fluid mgt-30">
         <div class="container">
-            <h4 class="display-5">클래스 안내</h4>
+            <h4 class="display-5">강의 안내</h4>
             <hr class="my-4">
             <p class="lead" th:text="${item.itemDetail}"></p>
         </div>
@@ -371,13 +372,30 @@
 
     <!--달력 내용 추가한 시작 부분-->
     <div id="calendar-widget">
-        <h3>클래스 일정</h3>
+        <h3>강의 일정</h3>
         <div id="datepicker"></div>
 
     </div>
     <script>
 
         $(function() {
+
+            $.datepicker.regional['ko'] = {
+                closeText: '닫기',
+                prevText: '이전달',
+                nextText: '다음달',
+                currentText: '오늘',
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                weekHeader: '주',
+                dateFormat: 'yy-mm-dd'
+            };
+
+            $.datepicker.setDefaults($.datepicker.regional['ko']);
+
 
             var classStartDate = "[[${item.classStartDate}]]";
             var classEndDate = "[[${item.classEndDate}]]";
