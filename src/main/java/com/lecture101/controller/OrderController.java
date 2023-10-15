@@ -1,5 +1,6 @@
 package com.lecture101.controller;
 
+
 import com.lecture101.dto.OrderDto;
 import com.lecture101.dto.OrderHistDto;
 import com.lecture101.service.OrderService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +47,14 @@ public class OrderController {
         Long orderId;
 
         try {
-            orderId = orderService.order(orderDto, email);
+
+
+            // 날짜/주문 관련 코드
+            LocalDate selectedDate = LocalDate.parse(orderDto.getSelectedDate());
+
+            orderId = orderService.order(orderDto, email, selectedDate);
+
+
         } catch(Exception e){
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

@@ -12,7 +12,8 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     CartItem findByCartIdAndItemId(Long cartId, Long itemId);
 
-    @Query("select new com.lecture101.dto.CartDetailDto(ci.id, i.itemNm, i.price, ci.count, im.imgUrl) " +
+    //날짜/장바구니 목록 구현 코드
+    @Query("select new com.lecture101.dto.CartDetailDto(ci.id, i.itemNm, i.price, ci.count, im.imgUrl, FUNCTION('DATE_FORMAT', ci.selectedDate, '%Y-%m-%d')) " +
             "from CartItem ci, ItemImg im " +
             "join ci.item i " +
             "where ci.cart.id = :cartId " +

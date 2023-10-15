@@ -386,10 +386,6 @@
             var endDate = new Date(classEndDate);
 
 
-
-            // 날짜 관련 코드
-            /*<input type="hidden" id="selectedDateInput" name="selectedDate" />*/
-
             $("#datepicker").datepicker({
                 dateFormat: "yy-mm-dd",
                 minDate: startDate,
@@ -397,9 +393,6 @@
                 onSelect: function(dateText) {
 
                     $("#selectedDate").text(dateText);
-
-                    // 날짜 관련 코드
-                    /*$("#selectedDateInput").val(dateText);*/
 
                 }
             });
