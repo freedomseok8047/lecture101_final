@@ -17,7 +17,9 @@
 </th:block>
 
 <div layout:fragment="content">
-    <th:block th:if="${memberUpdateDto != null}">
+    <div class="inner-cont">
+        <h2>마이 페이지</h2>
+        <th:block th:if="${memberUpdateDto != null}">
         <form role="form">
             <h1 class="text-decoration-none" sec:authorize="isAuthenticated()">
                 <span sec:authentication="name"></span>님의 마이페이지.
@@ -45,6 +47,7 @@
         });
 
     </script>
+    </div>
 </div>
 
 </html>
