@@ -32,7 +32,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
     }
 
-    // 클래스 리스트에서 카테고리로 검색 추가
     private BooleanExpression searchCategoryEq(Category searchCategory){
         return searchCategory == null ? null : QItem.item.category.eq(searchCategory);
     }
@@ -74,6 +73,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .selectFrom(QItem.item)
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        searchCategoryEq(itemSearchDto.getSearchCategory()),
                         searchByLike(itemSearchDto.getSearchBy(),
                                 itemSearchDto.getSearchQuery()))
                 .orderBy(QItem.item.id.desc())
@@ -101,6 +101,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         new QMainItemDto(
                                 item.id,
                                 item.category,
+                                item.lectureType,
+                                item.itemSellStatus,
                                 item.itemNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,

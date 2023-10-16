@@ -1,5 +1,6 @@
 package com.lecture101.dto;
 
+
 import com.lecture101.constant.Category;
 import com.lecture101.constant.ItemSellStatus;
 import com.lecture101.constant.LectureType;
@@ -32,11 +33,13 @@ public class ItemFormDto {
     @NotNull(message = "총 인원수는 필수 입력 값입니다.")
     private Integer stockNumber;
 
+    /*현석 파트 시작*/
     //날짜/시간 추가한 작업 시작 부분
     private String classStartDate; // 문자열로 날짜를 저장할 필드
 
     private String classEndDate;
     //날짜/시간 추가한 작업 끝 부분
+    /*현석 파트 끝*/
 
     @NotNull(message = "클래스 상태는 필수 입력 값입니다.")
     private ItemSellStatus itemSellStatus;
@@ -61,7 +64,7 @@ public class ItemFormDto {
         return modelMapper.map(item,ItemFormDto.class);
     }
 
-
+    /*현석 파트 시작*/
     //날짜/시간 추가한 작업 시작 부분
     public void setClassStartDate(String classStartDate) {
         this.classStartDate = classStartDate;
@@ -90,5 +93,6 @@ public class ItemFormDto {
         return null;
     }
     //날짜/시간 추가한 작업 끝 부분
+    /*현석 파트 끝*/
 
 }

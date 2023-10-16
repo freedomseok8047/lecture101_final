@@ -1,13 +1,19 @@
 package com.lecture101.controller;
 
+import com.lecture101.dto.CommentDTO;
 import com.lecture101.dto.ItemFormDto;
 import com.lecture101.dto.ItemSearchDto;
 import com.lecture101.entity.Item;
+import com.lecture101.entity.Member;
+import com.lecture101.service.CommentService;
 import com.lecture101.service.ItemService;
+import com.lecture101.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +33,8 @@ import java.util.Optional;
 public class ItemController {
 
     private final ItemService itemService;
+    private final MemberService memberService;
+    private final CommentService commentService;
 
     @GetMapping(value = "/admin/item/new")
     public String itemForm(Model model){
@@ -34,16 +42,18 @@ public class ItemController {
         return "item/itemForm";
     }
 
+        /*현석 파트 시작*/
+        //날짜/시간 추가한 작업 시작 부분
     @PostMapping(value = "/admin/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
                           Model model, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList,
                           @RequestParam("classStartDate") String classStartDateStr,
                           @RequestParam("classEndDate") String classEndDateStr) {
 
-        //날짜/시간 추가한 작업 시작 부분
         itemFormDto.setClassStartDate(classStartDateStr);
         itemFormDto.setClassEndDate(classEndDateStr);
         //날짜/시간 추가한 작업 끝 부분
+        /*현석 파트 끝*/
 
         if(bindingResult.hasErrors()){
             return "item/itemForm";
@@ -63,7 +73,6 @@ public class ItemController {
 
         return "redirect:/";
     }
-
 
     @GetMapping(value = "/admin/item/{itemId}")
     public String itemDtl(@PathVariable("itemId") Long itemId, Model model){
@@ -105,7 +114,7 @@ public class ItemController {
     @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
 
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
         Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
 
         model.addAttribute("items", items);
@@ -115,11 +124,27 @@ public class ItemController {
         return "item/itemMng";
     }
 
+    // 1011 ktb 수정
     @GetMapping(value = "/item/{itemId}")
-    public String itemDtl(Model model, @PathVariable("itemId") Long itemId){
+    public String itemDtl(Model model, @PathVariable("itemId") Long itemId,
+                          @AuthenticationPrincipal User user,
+                          @RequestParam(required = false, defaultValue = "0") int page) {
+
+        //각각의 페이지에 해당하는 댓글객체를 담아서 전달
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<CommentDTO> commentsPage = commentService.findCommentsByItemId(itemId, pageable);
+        model.addAttribute("commentsPage", commentsPage);
+
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
         model.addAttribute("item", itemFormDto);
+
+        if (user != null) {
+            Member member = memberService.findByEmail(user.getUsername());
+            model.addAttribute("member", member);
+        }
         return "item/itemDtl";
     }
+
+
 
 }
