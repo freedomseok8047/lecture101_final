@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name="item")
@@ -38,24 +37,12 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; //상품 판매 상태
 
-    //날짜/시간 추가한 작업 시작 부분
-    @Column(name = "class_start_date")
-    private LocalDate classStartDate;
-
-    @Column(name = "class_end_date")
-    private LocalDate classEndDate;
-    //날짜/시간 추가한 작업 끝 부분
-
     public void updateItem(ItemFormDto itemFormDto){
         this.itemNm = itemFormDto.getItemNm();
         this.price = itemFormDto.getPrice();
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
-        //날짜/시간 추가한 작업 시작 부분
-        this.classStartDate = itemFormDto.getClassStartDateAsLocalDate();
-        this.classEndDate = itemFormDto.getClassEndDateAsLocalDate();
-        //날짜/시간 추가한 작업 끝 부분
     }
 
     public void removeStock(int stockNumber){

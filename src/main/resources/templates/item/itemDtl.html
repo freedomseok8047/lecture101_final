@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -7,13 +6,6 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-
-    <!--달력 내용 추가한 시작 부분-->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!--달력 내용 추가한 끝 부분-->
-
 </head>
 
 <!-- 사용자 스크립트 추가 -->
@@ -27,12 +19,13 @@
                 calculateToalPrice();
             });
         });
-            function calculateToalPrice() {
-                var count = $("#count").val();
-                var price = $("#price").val();
-                var totalPrice = price * count;
-                $("#totalPrice").html(totalPrice + '원');
-            }
+
+        function calculateToalPrice(){
+            var count = $("#count").val();
+            var price = $("#price").val();
+            var totalPrice = price*count;
+            $("#totalPrice").html(totalPrice + '원');
+        }
 
         function order(){
             var token = $("meta[name='_csrf']").attr("content");
@@ -41,8 +34,7 @@
             var url = "/order";
             var paramData = {
                 itemId : $("#itemId").val(),
-                count : $("#count").val(),
-
+                count : $("#count").val()
             };
 
             var param = JSON.stringify(paramData);
@@ -82,8 +74,7 @@
             var url = "/cart";
             var paramData = {
                 itemId : $("#itemId").val(),
-                count : $("#count").val(),
-
+                count : $("#count").val()
             };
 
             var param = JSON.stringify(paramData);
@@ -122,43 +113,29 @@
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
-        .mgb-15 {
-            margin-bottom: 15px;
+        .mgb-15{
+            margin-bottom:15px;
         }
-        .mgt-30 {
-            margin-top: 30px;
+        .mgt-30{
+            margin-top:30px;
         }
-        .mgt-50 {
-            margin-top: 50px;
+        .mgt-50{
+            margin-top:50px;
         }
-        .repImgDiv {
-            margin-right: 15px;
-            height: auto;
-            width: 50%;
+        .repImgDiv{
+            margin-right:15px;
+            height:auto;
+            width:50%;
         }
-        .repImg {
-            width: 100%;
-            height: 400px;
+        .repImg{
+            width:100%;
+            height:400px;
         }
-        .wd50 {
-            height: auto;
-            width: 50%;
+        .wd50{
+            height:auto;
+            width:50%;
         }
-
-        /*달력 내용 추가한 시작 부분*/
-       #calendar-widget {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
-            z-index: 9999;
-        }
-        /*달력 내용 추가한 끝 부분*/
-
     </style>
-
 </th:block>
 
 <div layout:fragment="content" style="margin-left:25%;margin-right:25%">
@@ -167,13 +144,13 @@
 
     <div class="d-flex">
         <div class="repImgDiv">
-            <img th:src="${item.itemImgDtoList[0].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
+            <img th:src="${item.itemImgDtoList[0].imgUrl}" class = "rounded repImg" th:alt="${item.itemNm}">
         </div>
         <div class="wd50">
             <span th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
                 판매중
             </span>
-            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15">
+            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
                 품절
             </span>
             <div class="h4" th:text="${item.itemNm}"></div>
@@ -193,20 +170,10 @@
             </div>
             <hr class="my-4">
 
-            <div class="text-left"></div>
-
-            <!--날짜/시간 작업 시작 부분-->
-            <div class="text-right mgt-50">
-                <h5>선택한 날짜</h5>
-                <div id="selected-date-display" class="font-weight-bold"></div>
-            </div>
-            <!--날짜/시간 작업 끝 부분-->
-
             <div class="text-right mgt-50">
                 <h5>결제 금액</h5>
                 <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
             </div>
-
             <div th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="text-right">
                 <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>
                 <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
@@ -225,47 +192,9 @@
         </div>
     </div>
 
-
-
-
     <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
         <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
     </div>
-
-    <!--달력 내용 추가한 시작 부분-->
-    <div id="calendar-widget">
-        <h3>클래스 일정</h3>
-        <div id="datepicker"></div>
-
-    </div>
-    <script>
-
-        $(function() {
-
-            var classStartDate = "[[${item.classStartDate}]]";
-            var classEndDate = "[[${item.classEndDate}]]";
-
-            var startDate = new Date(classStartDate);
-            var endDate = new Date(classEndDate);
-
-
-
-
-            $("#datepicker").datepicker({
-                dateFormat: "yy-mm-dd",
-                minDate: startDate,
-                maxDate: endDate,
-                onSelect: function(dateText) {
-
-                    $("#selected-date-display").text(dateText);
-                    /*alert("선택한 날짜: " + dateText);*/
-
-                }
-            });
-        });
-    </script>
-    <!--달력 내용 추가한 끝 부분-->
-
 
 </div>
 

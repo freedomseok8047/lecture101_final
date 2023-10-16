@@ -14,11 +14,9 @@
     <script th:inline="javascript">
 
         $(document).ready(function(){
-
             $("input[name=cartChkBox]").change( function(){
                 getOrderTotalPrice();
             });
-
         });
 
         function getOrderTotalPrice(){
@@ -213,9 +211,8 @@
                 <td>
                     <input type="checkbox" id="checkall" onclick="checkAll()"> 전체선택
                 </td>
-                <td>클래스정보</td>
-                <td>클래스금액</td>
-                <td>클래스일정</td>
+                <td>상품정보</td>
+                <td>상품금액</td>
             </tr>
             </thead>
             <tbody>
@@ -250,7 +247,6 @@
                           name="totalPrice" th:text="${cartItem.price * cartItem.count} + '원'">
                     </span>
                 </td>
-
             </tr>
             </tbody>
         </table>
