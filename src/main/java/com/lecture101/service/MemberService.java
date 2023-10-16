@@ -7,21 +7,17 @@ import com.lecture101.dto.MemberUpdateDto;
 import com.lecture101.entity.Member;
 import com.lecture101.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 
 
 @Service
@@ -133,7 +129,7 @@ public class MemberService implements UserDetailsService {
     }
 
     //1011 ktb 수정
-    public Member findByEmail(String email) {
+    public Member findByEmail2(String email) {
         return memberRepository.findByEmail(email);
     }
 

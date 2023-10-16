@@ -140,7 +140,7 @@ public class ItemController {
         model.addAttribute("item", itemFormDto);
 
         if (user != null) {
-            Member member = memberService.findByEmail(user.getUsername());
+            Member member = memberService.findByEmail2(user.getUsername());
             model.addAttribute("member", member);
         }
         return "item/itemDtl";
