@@ -127,12 +127,6 @@
                 calculateToalPrice();
             });
         });
-        /*function calculateToalPrice() {
-            var count = $("#count").val();
-            var price = $("#price").val();
-            var totalPrice = price * count;
-            $("#totalPrice").html(totalPrice + '원');
-        }*/
         function calculateToalPrice() {
             var count = $("#count").val();
             var price = $("#price").val();
@@ -255,18 +249,6 @@
             width: 50%;
         }
 
-        /*달력 내용 추가한 시작 부분*/
-       #calendar-widget {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
-            z-index: 9999;
-        }
-        /*달력 내용 추가한 끝 부분*/
-
     </style>
 
 </th:block>
@@ -319,7 +301,7 @@
                 <!-- 상세 내용 -->
                 <div>
                     <ul class="nav-info">
-                        <li><a href="#lecture-info">클래스 소개</a> </li>
+                        <li><a href="#lecture-info">강의 소개</a> </li>
                         <li><a href="#location">오시는 길</a> </li>
                         <li><a href="#review">리뷰</a> </li>
                     </ul>
@@ -488,11 +470,11 @@
                     <!--달력 내용 추가한 끝 부분-->
                     <!-- 클래스 시작일 종료일 -->
                     <div class="lecture-date">
-                        <span class="s-title">클래스 시작일</span>
+                        <span class="s-title">강의 시작일</span>
                         <span th:text="${item.classStartDate}"></span>
                     </div>
                     <div class="lecture-date">
-                        <span class="s-title">클래스 종료일</span>
+                        <span class="s-title">강의 종료일</span>
                         <span th:text="${item.classEndDate}"></span>
                     </div>
                     <!-- //클래스 시작일 종료일 -->
@@ -514,8 +496,8 @@
                     </div>
 
                     <div th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="btn-order">
-                        <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">클래스 담기</button>
-                        <button type="button" class="btn btn-primary btn-lg" onclick="order()">클래스 신청</button>
+                        <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">강의 담기</button>
+                        <button type="button" class="btn btn-primary btn-lg" onclick="order()">강의 신청</button>
                     </div>
                     <div th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="btn-order">
                         <button type="button" class="btn btn-secondary btn-lg">종료된 강의</button>
