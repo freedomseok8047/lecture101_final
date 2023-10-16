@@ -114,6 +114,10 @@
                     <div class="fs18 font-weight-light">
                         <span th:text="${orderItem.orderPrice} +'원'"></span>
                         <span th:text="${orderItem.count} +'개'"></span>
+
+                        <!--날짜/주문 구현 코드-->
+                        <span th:text="${order.selectedDate}"></span>
+
                     </div>
                 </div>
             </div>

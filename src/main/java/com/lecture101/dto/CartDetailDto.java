@@ -16,12 +16,16 @@ public class CartDetailDto {
 
     private String imgUrl; //상품 이미지 경로
 
-    public CartDetailDto(Long cartItemId, String itemNm, int price, int count, String imgUrl){
+    //날짜/장바구니 목록 구현 코드
+    private String selectedDate; //상품 선택 날짜
+
+    public CartDetailDto(Long cartItemId, String itemNm, int price, int count, String imgUrl, String selectedDate){
         this.cartItemId = cartItemId;
         this.itemNm = itemNm;
         this.price = price;
         this.count = count;
         this.imgUrl = imgUrl;
+        this.selectedDate = selectedDate;
     }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDate; // 날짜 관련 코드
 import java.util.List;
 
 @Controller
@@ -41,6 +42,12 @@ public class CartController {
         Long cartItemId;
 
         try {
+
+            // 날짜 관련 코드
+            // CartItemDto에서 selectedDate를 LocalDate로 파싱하여 전달
+            LocalDate selectedDate = LocalDate.parse(cartItemDto.getSelectedDate());
+            cartItemDto.setSelectedDate(String.valueOf(selectedDate));
+
             cartItemId = cartService.addCart(cartItemDto, email);
         } catch(Exception e){
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);

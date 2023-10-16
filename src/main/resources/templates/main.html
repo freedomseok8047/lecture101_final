@@ -58,7 +58,7 @@
                         <div class="card-body">
                             <!-- 카테고리 출력 -->
                             <div th:each="type : ${T(com.lecture101.constant.Category).values()}"
-                                 th:if="${item.Category == type}"
+                                 th:if="${item.Category != null and item.Category == type}"
                                  th:text="${type.displayName}">
                             </div>
                             <!-- //카테고리 출력 -->
