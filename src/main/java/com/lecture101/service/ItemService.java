@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +34,7 @@ public class ItemService {
 
         //상품 등록
         Item item = itemFormDto.createItem();
-
-        //날짜/시간 추가한 작업 시작 부분
-        LocalDate classStartDate = itemFormDto.getClassStartDateAsLocalDate();
-        LocalDate classEndDate = itemFormDto.getClassEndDateAsLocalDate();
-        item.setClassStartDate(classStartDate);
-        item.setClassEndDate(classEndDate);
         itemRepository.save(item);
-        //날짜/시간 추가한 작업 끝 부분
 
         //이미지 등록
         for(int i=0;i<itemImgFileList.size();i++){
