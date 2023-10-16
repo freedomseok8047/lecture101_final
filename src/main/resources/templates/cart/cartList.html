@@ -14,7 +14,6 @@
     <script th:inline="javascript">
 
         $(document).ready(function(){
-
             $("input[name=cartChkBox]").change( function(){
                 getOrderTotalPrice();
             });
@@ -198,13 +197,10 @@
     </style>
 </th:block>
 
-<div layout:fragment="content" class="content-mg">
-
-    <h2 class="mb-4">
-        장바구니 목록
-    </h2>
-
-    <div>
+<div layout:fragment="content">
+    <div class="inner-cont">
+        <h2 class="mb-4">장바구니 목록</h2>
+        <div>
 
         <table class="table">
             <colgroup>
@@ -292,7 +288,6 @@
         <div class="text-center mt-3">
             <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
         </div>
-
     </div>
 </div>
 </html>

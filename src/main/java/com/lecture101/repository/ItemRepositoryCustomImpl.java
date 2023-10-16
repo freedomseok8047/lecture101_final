@@ -101,6 +101,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         new QMainItemDto(
                                 item.id,
                                 item.category,
+                                item.lectureType,
+                                item.itemSellStatus,
                                 item.itemNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,
