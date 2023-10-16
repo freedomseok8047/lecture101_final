@@ -26,12 +26,11 @@ public class CartItem extends BaseEntity {
 
     private int count;
 
-    /*날짜 관련 코드*/
     @Column(name = "selected_date")
     private LocalDate selectedDate; // 선택한 날짜를 저장할 필드
 
 
-    public static CartItem createCartItem(Cart cart, Item item, int count, LocalDate selectedDate) {
+    public static CartItem createCartItem(Cart cart, Item item, int count) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setItem(item);
