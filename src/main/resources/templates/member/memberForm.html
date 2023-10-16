@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/layout1}">
 
 <!-- 사용자 CSS 추가 -->
@@ -21,6 +21,7 @@
             if(errorMessage != null){
                 alert(errorMessage);
             }
+
         });
     </script>
 
@@ -50,20 +51,16 @@
             <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError">Incorrect data</p>
         </div>
 
-        <div style="text-align: center">
+        <div th:if="${#strings.isEmpty(memberFormDto.name)}" style="text-align: center">
             <button type="submit" class="btn btn-primary" style="">가입</button>
         </div>
 
-<!--        &lt;!&ndash;맴버의 이름 없다면 가입, 있다면 수정&ndash;&gt;-->
-<!--        <div th:if="${#strings.isEmpty(memberFormDto.name)}" style="text-align: center">-->
-<!--            <button th:formaction="@{/members/new}" type="submit" class="btn btn-primary" style="">가입</button>-->
-<!--        </div>-->
-<!--        <div th:unless="${#strings.isEmpty(memberFormDto.name)}" style="text-align: center">-->
-<!--            <button th:formaction="@{'/members/admin/'}" type="submit" class="btn btn-primary" style="">수정</button>-->
+        <div th:unless="${#strings.isEmpty(memberFormDto.name)}" style="text-align: center" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+            <a href="/members/admin" class="btn btn-primary" style="">확인</a>
+        </div>
 
 
-
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     </form>
 
 </div>
