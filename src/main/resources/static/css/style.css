@@ -210,6 +210,10 @@ a:hover {
     margin-bottom: 20px;
 }
 
+/* --------------------------*/
+/* item : 강의
+/* --------------------------*/
+
 .img-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -432,4 +436,16 @@ a:hover {
 }
 
 
+/* --------------------------*/
+/* order : 강의 신청
+/* --------------------------*/
+.order-wrap .card {
+    border: none;
+}
+.order-list-block {
+    border: 1px solid #ddd;
+    border-radius: 1.4em;
+    padding: 2rem;
+    margin-bottom: 20px;
+}
 
