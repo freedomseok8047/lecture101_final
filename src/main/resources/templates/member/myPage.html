@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/layout1}">
+<!--<head>-->
+<!-- 이 부분 필수 인지 모르겠음 정상동작은 함-->
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+<!--</head>-->
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .error {
+            color: #bd2130;}
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+    <th:block th:if="${memberUpdateDto != null}">
+        <form role="form">
+            <h1 class="text-decoration-none" sec:authorize="isAuthenticated()">
+                <span sec:authentication="name"></span>님의 마이페이지.
+            </h1>
+            <button type="button" class="btn btn-primary" onClick="location.href='/cart'">클래스 신청</button>
+            <button type="button" class="btn btn-primary" onClick="location.href='/orders'">수강 내역</button>
+            <a class="btn btn-primary" th:href="@{/members/updateMemberForm/{memberId}(memberId=${memberUpdateDto.id})}">회원정보수정</a>
+            <a id="memberDeleteBtn" class="btn btn-primary" th:href="@{/members/deleteMember/{memberId}(memberId=${memberUpdateDto.id})}" type="button">회원탈퇴</a>
+
+
+        </form>
+    </th:block>
+
+    <script>
+
+        $(document).ready(function() {
+            $("#memberDeleteBtn").click(function(event) {
+                event.preventDefault(); // 버튼의 기본 동작 중단
+
+                var shouldDelete = confirm("정말 회원탈퇴 하시겠습니까?");
+                if (shouldDelete) {
+                    location.href = $(this).attr('href'); // 버튼의 href 속성을 사용하여 이동
+                }
+            });
+        });
+
+    </script>
+</div>
+
+</html>
