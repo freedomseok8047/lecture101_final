@@ -21,9 +21,22 @@ a:hover {
 .inner-cont .table {
     border-bottom: 2px solid #dee2e6;
 }
-.inner-cont .table thead td {
+.inner-cont .table.center tbody,
+.inner-cont .table tbody td.center{
+    text-align: center;
+}
+.inner-cont .table thead th,
+.inner-cont .table thead td{
     text-align: center;
     background: #f5f5f5;
+    font-weight: 500;
+}
+.inner-cont .table th,
+.inner-cont .table td {
+    vertical-align: middle;
+}
+.inner-cont table .close {
+    float: none;
 }
 .inner-cont .table tbody td:first-child {
     text-align: center;
@@ -31,6 +44,7 @@ a:hover {
 .inner-cont .pagination {
     margin: 40px 0;
 }
+
 
 
 /* Header */
