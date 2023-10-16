@@ -42,17 +42,25 @@
 
 <div layout:fragment="content">
     <div class="inner-cont">
-        <h2>클래스 관리</h2>
+        <h2>강의 관리</h2>
         <form th:action="@{'/admin/items/' + ${items.number}}" role="form" method="get" th:object="${items}">
             <table class="table">
+                <colgroup>
+                    <col style="width:10%">
+                    <col style="width:30%">
+                    <col style="width:10%">
+                    <col style="width:10%">
+                    <col style="width:10%">
+                    <col style="width:10%">
+                </colgroup>
                 <thead>
                 <tr>
-                    <td>클래스 아이디</td>
-                    <td>클래스명</td>
-                    <td>카테고리</td>
-                    <td>상태</td>
-                    <td>등록자</td>
-                    <td>등록일</td>
+                    <th>강의 아이디</th>
+                    <th>강의명</th>
+                    <th>카테고리</th>
+                    <th>상태</th>
+                    <th>등록자</th>
+                    <th>등록일</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,11 +71,11 @@
                     </td>
                     <td th:each="type : ${T(com.lecture101.constant.Category).values()}"
                         th:if="${item.Category == type}"
-                        th:text="${#strings.isEmpty(type.displayName) ? '' : type.displayName}">
+                        th:text="${#strings.isEmpty(type.displayName) ? '' : type.displayName}" class="center">
                     </td>
                     <td th:each="type : ${T(com.lecture101.constant.ItemSellStatus).values()}"
                         th:if="${item.itemSellStatus == type}"
-                        th:text="${type.description}"></td>
+                        th:text="${type.description}" class="center"></td>
 
                     <td th:text="${item.createdBy}"></td>
                     <td th:text="${item.regTime}"></td>

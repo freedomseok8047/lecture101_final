@@ -199,94 +199,80 @@
 
 <div layout:fragment="content">
     <div class="inner-cont">
-        <h2 class="mb-4">장바구니 목록</h2>
+        <h2>내가 담은 강의 목록</h2>
         <div>
+            <table class="table">
+                <colgroup>
+                    <col style="width:10%"/>
+                    <col style="width:30%"/>
+                    <col style="width:20%"/>
+                    <col style="width:10%"/>
+                    <col style="width:10%"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th><input type="checkbox" id="checkall" onclick="checkAll()">선택</th>
+                    <th>강의명</th>
+                    <th>강의금액</th>
+                    <th>강의일정</th>
+                    <th>삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cartItem : ${cartItems}">
+                    <td class="text-center align-middle">
+                        <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
+                    </td>
+                    <td>
+                        <div class="align-self-center">
+                            <span th:text="${cartItem.itemNm}" class="fs18 font-weight-bold"></span>
+                        </div>
+                        <div class="align-self-center">
+                            <img th:src="${cartItem.imgUrl}" class = "rounded repImg" th:alt="${cartItem.itemNm}">
+                        </div>
+                    </td>
 
-        <table class="table">
-            <colgroup>
-                <col width="10%"/>
-                <col width="20%"/>
-                <col width="30%"/>
-                <col width="30%"/>
-                <col width="10%"/>
-            </colgroup>
-            <thead>
-            <tr class="text-center">
-            <tr class="fs14 font-weight-bold">
-
-                <td><input type="checkbox" id="checkall" onclick="checkAll()">선택</td>
-                <td>강의명</td>
-                <td>강의금액</td>
-                <td>강의일정</td>
-                <td>삭제</td>
-
-            </tr>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cartItem : ${cartItems}">
-
-                <td class="text-center align-middle">
-                    <div>
-                    <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
-                    </div>
-                </td>
-
-                <td>
-                    <div class="align-self-center">
-                        <span th:text="${cartItem.itemNm}" class="fs18 font-weight-bold"></span>
-                    </div>
-                    <div class="align-self-center">
-                        <img th:src="${cartItem.imgUrl}" class = "rounded repImg" th:alt="${cartItem.itemNm}">
-                    </div>
-                </td>
-
-                <td>
-                    <div class="align-self-center">
+                    <td>
+                        <div class="align-self-center">
                         <span th:id="'price_' + ${cartItem.cartItemId}"
                               th:data-price="${cartItem.price}"
                               th:text="${cartItem.price} + '원'" class="form-control mr-2">
                         </span>
-                    </div>
-                    <div class="align-self-center">
-                        <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
+                        </div>
+                        <div class="align-self-center">
+                            <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
                                    th:value="${cartItem.count}" min="1"
                                    onchange="changeCount(this)" class="form-control mr-2" >
-                    </div>
-                    <br>
-                    <div class="align-self-center">
+                        </div>
+                        <div class="align-self-center">
                         <span th:id="'totalPrice_' + ${cartItem.cartItemId}"
-                                name="totalPrice" th:text="${cartItem.price * cartItem.count} + '원'"
-                                class="fs18 font-weight-bold">
+                              name="totalPrice" th:text="${cartItem.price * cartItem.count} + '원'"
+                              class="fs18 font-weight-bold">
                         </span>
-                    </div>
-                </td>
+                        </div>
+                    </td>
 
-                <!--날짜/장바구니 목록 구현 코드-->
-                <td>
-                    <div class="align-self-center">
-                        <span th:text="${cartItem.selectedDate}" class="fs18 font-weight-bold">
-                        </span>
-                    </div>
-                </td>
+                    <!--날짜/장바구니 목록 구현 코드-->
+                    <td class="center">
+                        <span th:text="${cartItem.selectedDate}"></span>
+                    </td>
 
-                <td>
-                    <div class="align-self-center">
+                    <td class="center">
                         <button type="button" class="close" aria-label="Close">
                             <span aria-hidden="true" th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">&times;</span>
                         </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-        <h2 class="text-center">
-            총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
-        </h2>
+            <h2 class="text-center">
+                총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
+            </h2>
 
-        <div class="text-center mt-3">
-            <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
+            </div>
         </div>
     </div>
 </div>

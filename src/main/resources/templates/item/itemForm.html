@@ -91,18 +91,18 @@
 
 <div layout:fragment="content">
     <div class="inner-cont">
-        <h2>클래스 등록</h2>
+        <h2>강의 등록</h2>
         <form role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
 
-        <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{id}">
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">클래스 명</span>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">강의명</span>
+                </div>
+                <input type="text" th:field="*{itemNm}" class="form-control" placeholder="강의명을 입력해 주세요">
             </div>
-            <input type="text" th:field="*{itemNm}" class="form-control" placeholder="클래스명을 입력해 주세요">
-        </div>
-        <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
 
         <!-- 카테고리 선택 -->
         <div class="form-group">
@@ -115,28 +115,28 @@
         <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="fieldError">Incorrect data</p>
         <!-- //카테고리 선택 -->
 
-        <!-- 클래스 상태 선택 -->
+        <!-- 강의 상태 선택 -->
         <div class="form-group">
             <select th:field="*{itemSellStatus}" class="custom-select">
-                <option value="">클래스 상태 선택</option>
+                <option value="">강의 상태 선택</option>
                 <option value="SELL">강의중</option>
                 <option value="SOLD_OUT">종료된 강의</option>
             </select>
         </div>
         <p th:if="${#fields.hasErrors('itemSellStatus')}" th:errors="*{itemSellStatus}" class="fieldError">Incorrect data</p>
-        <!-- //클래스 상태 선택 -->
+        <!-- //강의 상태 선택 -->
 
-        <!-- 클래스 타입 선택-->
+        <!-- 강의 타입 선택-->
         <div class="form-group">
             <select th:field="*{lectureType}" class="custom-select">
-                <option value="">클래스 타입 선택</option>
+                <option value="">강의 타입 선택</option>
                 <option value="ONE_TO_ONE">1:1 강의</option>
                 <option value="GROUP">그룹 강의</option>
                 <option value="ONLINE">온라인 강의</option>
             </select>
         </div>
         <p th:if="${#fields.hasErrors('lectureType')}" th:errors="*{lectureType}" class="fieldError">Incorrect data</p>
-        <!-- //클래스 타입 선택-->
+        <!-- //강의 타입 선택-->
 
         <!--날짜/시간 추가한 작업 시작 부분-->
         <!-- 날짜 선택 버튼 -->
@@ -175,7 +175,7 @@
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">클래스 소개</span>
+                <span class="input-group-text">강의 소개</span>
             </div>
             <textarea class="form-control" aria-label="With textarea" th:field="*{itemDetail}"></textarea>
         </div>
