@@ -115,6 +115,7 @@ public class CartService {
             OrderDto orderDto = new OrderDto();
             orderDto.setItemId(cartItem.getItem().getId());
             orderDto.setCount(cartItem.getCount());
+            orderDto.setSelectedDate(cartItem.getSelectedDate().toString());
             orderDtoList.add(orderDto);
         }
 
