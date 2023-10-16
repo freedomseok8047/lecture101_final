@@ -31,7 +31,7 @@ public class CartItem extends BaseEntity {
     private LocalDate selectedDate; // 선택한 날짜를 저장할 필드
 
 
-    public static CartItem createCartItem(Cart cart, Item item, int count) {
+    public static CartItem createCartItem(Cart cart, Item item, int count, LocalDate selectedDate) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setItem(item);
