@@ -108,10 +108,10 @@ public class MemberController {
             // 유효성, 체크.
             model.addAttribute("errorMessage", "존재하지 않는 회원입니다.");
             model.addAttribute("memberFormDto", new MemberFormDto());
-            return "member/memberForm";
+            return "member/memberInfo";
         }
 
-        return "member/memberForm";
+        return "member/memberInfo";
     }
 
 

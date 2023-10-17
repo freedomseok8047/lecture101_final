@@ -27,6 +27,7 @@ public class Member extends BaseEntity {
                     @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
             }
     )
+    private Long id;
 
     private String name;
 
