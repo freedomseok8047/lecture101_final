@@ -25,18 +25,24 @@
                 var cartItemId = $(this).val();
                 var price = $("#price_" + cartItemId).attr("data-price");
                 var count = $("#count_" + cartItemId).val();
-                orderTotalPrice += price*count;
+                orderTotalPrice += price * count;
             });
 
-            $("#orderTotalPrice").html(orderTotalPrice+'원');
+            // 콤마가 포함된 형식으로 표시
+            var formattedPrice = orderTotalPrice.toLocaleString();
+            $("#orderTotalPrice").html(formattedPrice + '원');
         }
 
         function changeCount(obj){
             var count = obj.value;
             var cartItemId = obj.id.split('_')[1];
             var price = $("#price_" + cartItemId).data("price");
-            var totalPrice = count*price;
-            $("#totalPrice_" + cartItemId).html(totalPrice+"원");
+            var totalPrice = count * price;
+
+            // 콤마가 포함된 형식으로 표시
+            var formattedTotalPrice = totalPrice.toLocaleString();
+
+            $("#totalPrice_" + cartItemId).html(formattedTotalPrice + "원");
             getOrderTotalPrice();
             updateCartItemCount(cartItemId, count);
         }
@@ -224,32 +230,29 @@
                         <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
                     </td>
                     <td>
-                        <div class="align-self-center">
-                            <span th:text="${cartItem.itemNm}" class="fs18 font-weight-bold"></span>
-                        </div>
-                        <div class="align-self-center">
-                            <img th:src="${cartItem.imgUrl}" class = "rounded repImg" th:alt="${cartItem.itemNm}">
-                        </div>
+                        <img th:src="${cartItem.imgUrl}" class = "rounded repImg" th:alt="${cartItem.itemNm}">
+                        <span th:text="${cartItem.itemNm}" class="fs18 font-weight-bold ml-3"></span>
                     </td>
 
-                    <td>
-                        <div class="align-self-center">
-                        <span th:id="'price_' + ${cartItem.cartItemId}"
-                              th:data-price="${cartItem.price}"
-                              th:text="${cartItem.price} + '원'" class="form-control mr-2">
-                        </span>
+                    <td class="center">
+                        <div class="">
+                            <span th:id="'price_' + ${cartItem.cartItemId}"
+                                  th:data-price="${cartItem.price}"
+                                  th:text="${#numbers.formatInteger(cartItem.price, 3, 'COMMA')} + '원'" class="mr-2">
+                            </span>
+                            <span>
+                                <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
+                                       th:value="${cartItem.count}" min="1"
+                                       onchange="changeCount(this)" class="form-control mr-2" >
+                            </span>
                         </div>
-                        <div class="align-self-center">
-                            <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
-                                   th:value="${cartItem.count}" min="1"
-                                   onchange="changeCount(this)" class="form-control mr-2" >
+                        <div class="cart-totalPrice-list">
+                            <span th:id="'totalPrice_' + ${cartItem.cartItemId}"
+                                  name="totalPrice" th:text="${cartItem.price * cartItem.count} + '원'"
+                                  class="fs18 font-weight-bold">
+                            </span>
                         </div>
-                        <div class="align-self-center">
-                        <span th:id="'totalPrice_' + ${cartItem.cartItemId}"
-                              name="totalPrice" th:text="${cartItem.price * cartItem.count} + '원'"
-                              class="fs18 font-weight-bold">
-                        </span>
-                        </div>
+
                     </td>
 
                     <!--날짜/장바구니 목록 구현 코드-->

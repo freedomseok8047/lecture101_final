@@ -10,6 +10,10 @@ a:hover {
     color: #000;
 }
 
+.lead {
+    white-space: pre-line;
+}
+
 .card-body .badge {
     display: inline-block;
     margin-left: 10px;
@@ -20,6 +24,7 @@ a:hover {
 /* table */
 .inner-cont .table {
     border-bottom: 2px solid #dee2e6;
+    margin-bottom: 2rem;
 }
 .inner-cont .table.center tbody,
 .inner-cont .table tbody td.center{
@@ -443,9 +448,53 @@ a:hover {
     border: none;
 }
 .order-list-block {
+    position: relative;
     border: 1px solid #ddd;
     border-radius: 1.4em;
     padding: 2rem;
     margin-bottom: 20px;
+}
+.order-list-block .order-data {
+    margin-left :20px;
+}
+.order-list-block .order-data ul {
+    display: flex;
+    font-size: 1.1rem;
+    margin: 14px 0 5px;
+}
+.order-list-block .order-data ul span {
+    display: inline-block;
+}
+.order-list-block .order-data ul li span:first-child {
+    display: inline-block;
+    padding-right: 5px;
+    color: #e05e35;
+}
+.order-list-block .order-data ul li span:last-child:after {
+    content:'|';
+    display: inline-block;
+    color: #999;
+    height: 16px;
+    margin: 0 14px;
+}
+.order-list-block .order-data ul li:last-child span:last-child:after {
+    display: none;
+}
+.order-list-block .order-btn {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.inner-cont .form-control {
+    display: inline-block;
+    width: 100px;
+}
+
+.cart-totalPrice-list {
+    margin: 10px 0;
+    padding-top: 10px;
+    border-top: 1px dashed #ddd;
 }
 
