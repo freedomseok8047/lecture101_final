@@ -487,7 +487,7 @@ a:hover {
     transform: translateY(-50%);
 }
 
-.inner-cont .form-control {
+.inner-cont .cart-wrap .form-control {
     display: inline-block;
     width: 100px;
 }
