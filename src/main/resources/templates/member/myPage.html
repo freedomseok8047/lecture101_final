@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/layout1}">
+
 <!--<head>-->
 <!-- 이 부분 필수 인지 모르겠음 정상동작은 함-->
 <!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
@@ -17,21 +18,28 @@
 </th:block>
 
 <div layout:fragment="content">
+
     <div class="inner-cont">
-        <h2>마이 페이지</h2>
+        <h1><i class="fa-solid fa-circle-user"></i> 마이 페이지</h1>
+        <br>
+
+
         <th:block th:if="${memberUpdateDto != null}">
         <form role="form">
-            <h1 class="text-decoration-none" sec:authorize="isAuthenticated()">
-                <span sec:authentication="name"></span>님의 마이페이지.
-            </h1>
-            <button type="button" class="btn btn-primary" onClick="location.href='/cart'">관심 목록</button>
-            <button type="button" class="btn btn-primary" onClick="location.href='/orders'">수강 내역</button>
-            <a class="btn btn-primary" th:href="@{/members/updateMemberForm/{memberId}(memberId=${memberUpdateDto.id})}">회원정보수정</a>
-            <a id="memberDeleteBtn" class="btn btn-primary" th:href="@{/members/deleteMember/{memberId}(memberId=${memberUpdateDto.id})}" type="button">회원탈퇴</a>
+            <h5 class="text-decoration-none" sec:authorize="isAuthenticated()">
+                <i class="fa-solid fa-heart-circle-check"></i>  <span sec:authentication="name"></span>님 행복하세요!
+            </h5>
+
+            <button type="button" class="btn btn-dark" onClick="location.href='/cart'">관심 목록</button>
+            <button type="button" class="btn btn-dark" onClick="location.href='/orders'">수강 내역</button>
+            <a class="btn btn-dark" th:href="@{/members/updateMemberForm/{memberId}(memberId=${memberUpdateDto.id})}">회원정보수정</a>
+            <a id="memberDeleteBtn" class="btn btn-dark" th:href="@{/members/deleteMember/{memberId}(memberId=${memberUpdateDto.id})}" type="button">회원탈퇴</a>
 
 
         </form>
     </th:block>
+
+
 
     <script>
 

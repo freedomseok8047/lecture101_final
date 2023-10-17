@@ -498,3 +498,9 @@ a:hover {
     border-top: 1px dashed #ddd;
 }
 
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #66717d;
+    border-color: #66717d;
+}

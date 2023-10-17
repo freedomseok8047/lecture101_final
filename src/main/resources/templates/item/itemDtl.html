@@ -496,7 +496,7 @@
 
                     <div th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="btn-order">
                         <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">강의 담기</button>
-                        <button type="button" class="btn btn-primary btn-lg" onclick="order()">강의 신청</button>
+                        <button type="button" class="btn btn-dark btn-lg" onclick="order()">강의 신청</button>
                     </div>
                     <div th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="btn-order">
                         <button type="button" class="btn btn-secondary btn-lg">종료된 강의</button>
