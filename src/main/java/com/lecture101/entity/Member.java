@@ -6,6 +6,7 @@ import com.lecture101.dto.MemberUpdateDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -18,8 +19,14 @@ public class Member extends BaseEntity {
 
     @Id
     @Column(name="member_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom2-id")
+    @GenericGenerator(name = "custom2-id", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = "sequence_name", value = "lecture101"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "20230001"),
+                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
+            }
+    )
 
     private String name;
 
