@@ -68,21 +68,22 @@
         <div th:with="start=${(members.number/maxPage)*maxPage + 1}, end=(${(members.totalPages == 0) ? 1 : (start + (maxPage - 1) < members.totalPages ? start + (maxPage - 1) : members.totalPages)})" >
             <ul class="pagination justify-content-center">
 
-                <li class="page-member" th:classappend="${members.first}?'disabled'">
+                <li class="page-item" th:classappend="${members.first}?'disabled'">
                     <a th:onclick="'javascript:page(' + ${members.number - 1} + ')'" aria-label='Previous' class="page-link">
                         <span aria-hidden='true'>Previous</span>
                     </a>
                 </li>
 
-                <li class="page-member" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${members.number eq page-1}?'active':''">
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${members.number eq page-1}?'active':''">
                     <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
                 </li>
 
-                <li class="page-member" th:classappend="${members.last}?'disabled'">
+                <li class="page-item" th:classappend="${members.last}?'disabled'">
                     <a th:onclick="'javascript:page(' + ${members.number + 1} + ')'" aria-label='Next' class="page-link">
                         <span aria-hidden='true'>Next</span>
                     </a>
                 </li>
+
 
             </ul>
         </div>
@@ -105,7 +106,7 @@
                 <option value="createdBy">등록자</option>
             </select>
             <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
-            <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+            <button id="searchBtn" type="submit" class="btn btn-dark">검색</button>
         </div>
     </form>
     </div>
