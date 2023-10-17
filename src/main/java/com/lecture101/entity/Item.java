@@ -9,6 +9,8 @@ import com.lecture101.exception.OutOfStockException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,10 +24,18 @@ import java.util.List;
 @ToString
 public class Item extends BaseEntity {
 
+    // Item id 1000번부터 생성되도록 설정
     @Id
     @Column(name="item_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;       // 클래스 코드
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
+    @GenericGenerator(name = "custom-id", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @Parameter(name = "sequence_name", value = "lecture101"),
+                    @Parameter(name = "initial_value", value = "1000"),
+                    @Parameter(name = "increment_size", value = "1")
+            }
+    )
+    private Long id;
 
     @Column(nullable = false, length = 50)
     private String itemNm; //클래스명
