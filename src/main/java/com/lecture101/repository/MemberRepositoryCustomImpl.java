@@ -1,7 +1,7 @@
 package com.lecture101.repository;
 
 import com.lecture101.constant.Role;
-import com.lecture101.dto.MemberSearchDto;
+import com.lecture101.dto.*;
 import com.lecture101.entity.Member;
 import com.lecture101.entity.QMember;
 import com.querydsl.core.QueryResults;
@@ -48,8 +48,8 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
 
     private BooleanExpression searchByLike(String searchBy, String searchQuery){
 
-        if(StringUtils.equals("id", searchBy)){
-            return QMember.member.id.like("%" + searchQuery + "%");
+        if(StringUtils.equals("name", searchBy)){
+            return QMember.member.name.like("%" + searchQuery + "%");
         } else if(StringUtils.equals("createdBy", searchBy)){
             return QMember.member.createdBy.like("%" + searchQuery + "%");
         }
@@ -65,11 +65,12 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
         QueryResults<Member> results = queryFactory
                 .selectFrom(QMember.member)
                 // 조건절을 명시, 별말 없으면, and 조건으로
-                .where(regDtsAfter(memberSearchDto.getSearchDateType()),
+                .where(
+                        regDtsAfter(memberSearchDto.getSearchDateType()),
                         searchRoleEq(memberSearchDto.getSearchRole()),
-                        searchByLike(memberSearchDto.getSearchBy(),
-                                memberSearchDto.getSearchQuery()))
-                // 정렬 조건.,  최신 상품 순서로
+                        searchByLike(memberSearchDto.getSearchBy(), memberSearchDto.getSearchQuery())
+                )
+                // 정렬 조건.,  최근에 가입한 순서로
                 .orderBy(QMember.member.id.desc())
                 // 페이징의 페이지 번호 위치. 0
                 .offset(pageable.getOffset())
@@ -86,8 +87,32 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
         return new PageImpl<>(content, pageable, total);
     }
 
-    private BooleanExpression memberNmLike(String searchQuery){
-        return StringUtils.isEmpty(searchQuery) ? null : QMember.member.id.like("%" + searchQuery + "%");
-    }
+//    private BooleanExpression memberNmLike(String searchQuery){
+//        return StringUtils.isEmpty(searchQuery) ? null : QMember.member.id.like("%" + searchQuery + "%");
+//    }
+
+//    @Override
+//    public Page<MainMemberDto> getMainMemberPage(MemberSearchDto memberSearchDto, Pageable pageable) {
+//        QMember member = QMember.member;
+//
+//        QueryResults<MainMemberDto> results = queryFactory
+//                .select(
+//                        new QMainMemberDto(
+//                                member.id,
+//                                member.role,
+//                                member.name)
+//
+//                )
+//
+//                .where(memberNmLike(memberSearchDto.getSearchQuery()))
+//                .orderBy(member.id.desc())
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .fetchResults();
+//
+//        List<MainMemberDto> content = results.getResults();
+//        long total = results.getTotal();
+//        return new PageImpl<>(content, pageable, total);
+//    }
 
 }

@@ -79,9 +79,13 @@ public class MemberController {
 
 
     // 회원 관리 페이지 링킹
-    @GetMapping(value = {"/admin"})
+    @GetMapping(value = {"/admin", "/admin/search/{page}"})
     public String memberManage(MemberSearchDto memberSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
 
+        System.out.println("넘어온 페이지 값 확인: " + page);
+        System.out.println("memberSearchDto 의 getSearchRole 내용 : " + memberSearchDto.getSearchRole());
+        System.out.println("memberSearchDto 의 getSearchQuery 내용 : " + memberSearchDto.getSearchQuery());
+        System.out.println("memberSearchDto 의 getSearchBy 내용 : " + memberSearchDto.getSearchBy());
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
         Page<Member> members = memberService.getAdminMemberPage(memberSearchDto, pageable);
 
@@ -91,6 +95,27 @@ public class MemberController {
 
         return "member/memberMng";
     }
+    // 관리자가 봤을 때, 회원 상세 페이지 폼 (수정 불가)
+    @GetMapping(value = "/admin/{memberId}")
+    public String memberDtl(@PathVariable("memberId") Long memberId, Model model){
+
+        try {
+            // 예) 맴버id로, 실제 디비에서 조회 후, 내용을 dto 담기.
+            MemberFormDto memberFormDto = memberService.getMemberDtl(memberId);
+            // dto 담은 내용을 모델 인스턴스에 담아서, 뷰로 전달.
+            model.addAttribute("memberFormDto", memberFormDto);
+        } catch(EntityNotFoundException e){
+            // 유효성, 체크.
+            model.addAttribute("errorMessage", "존재하지 않는 회원입니다.");
+            model.addAttribute("memberFormDto", new MemberFormDto());
+            return "member/memberForm";
+        }
+
+        return "member/memberForm";
+    }
+
+
+
     //마이페이지 띄우기
     @GetMapping(value = {"/mypage"})
     public String showMyPage(Model model, @AuthenticationPrincipal User user) {
@@ -182,26 +207,6 @@ public class MemberController {
         return "redirect:/members/login";
     }
 
-
-
-    // 관리자가 봤을 때, 회원 상세 페이지 폼 (수정 불가)
-    @GetMapping(value = "/admin/{memberId}")
-    public String memberDtl(@PathVariable("memberId") Long memberId, Model model){
-
-        try {
-            // 예) 맴버id로, 실제 디비에서 조회 후, 내용을 dto 담기.
-            MemberFormDto memberFormDto = memberService.getMemberDtl(memberId);
-            // dto 담은 내용을 모델 인스턴스에 담아서, 뷰로 전달.
-            model.addAttribute("memberFormDto", memberFormDto);
-        } catch(EntityNotFoundException e){
-            // 유효성, 체크.
-            model.addAttribute("errorMessage", "존재하지 않는 회원입니다.");
-            model.addAttribute("memberFormDto", new MemberFormDto());
-            return "member/memberForm";
-        }
-
-        return "member/memberForm";
-    }
 
 }
 
