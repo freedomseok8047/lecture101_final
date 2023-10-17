@@ -86,15 +86,28 @@
 </th:block>
 
 <div layout:fragment="content">
-    <div class="inner-cont">
-
+    <div class="inner-cont order-wrap">
         <h2>수강 내역</h2>
-
-        <div th:each="order : ${orders.getContent()}">
-
-        <div class="d-flex mb-3 align-self-center">
-            <h4 th:text="${order.orderDate} + ' 주문'"></h4>
-            <div class="ml-3">
+        <div th:each="order : ${orders.getContent()}" class="order-list-block">
+            <div class="card d-flex">
+                <div th:each="orderItem : ${order.orderItemDtoList}" class="d-flex">
+                    <div class="repImgDiv">
+                        <img th:src="${orderItem.imgUrl}" class = "rounded repImg" th:alt="${orderItem.itemNm}">
+                    </div>
+                    <div class="order-data">
+                        <span th:text="${orderItem.itemNm}" class="fs24 font-weight-bold"></span>
+                        <ul class="list-unstyled">
+                            <li><span class="font-weight-bold">가격 : </span><span th:text="${#numbers.formatInteger(orderItem.orderPrice, 3, 'COMMA')} + '원'"></span></li>
+                            <li><span class="font-weight-bold">인원수 : </span><span th:text="${orderItem.count}"></span></li>
+                            <li><span class="font-weight-bold">강의 희망일 : </span><span th:text="${order.selectedDate}"></span></li>
+                        </ul>
+                        <div>
+                            <span class="font-weight-bold">강의 신청일 : </span><span th:text="${order.orderDate}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ml-3 order-btn">
                 <th:block th:if="${order.orderStatus == T(com.lecture101.constant.OrderStatus).ORDER}">
                     <button type="button" class="btn btn-outline-secondary" th:value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button>
                 </th:block>
@@ -103,26 +116,6 @@
                 </th:block>
             </div>
         </div>
-        <div class="card d-flex">
-            <div th:each="orderItem : ${order.orderItemDtoList}" class="d-flex mb-3">
-                <div class="repImgDiv">
-                    <img th:src="${orderItem.imgUrl}" class = "rounded repImg" th:alt="${orderItem.itemNm}">
-                </div>
-                <div class="align-self-center w-75">
-                    <span th:text="${orderItem.itemNm}" class="fs24 font-weight-bold"></span>
-                    <div class="fs18 font-weight-light">
-                        <span th:text="${orderItem.orderPrice} +'원'"></span>
-                        <span th:text="${orderItem.count} +'개'"></span>
-
-                        <!--날짜/주문 구현 코드-->
-                        <span th:text="${order.selectedDate}"></span>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 
         <div th:with="start=${(orders.number/maxPage)*maxPage + 1}, end=(${(orders.totalPages == 0) ? 1 : (start + (maxPage - 1) < orders.totalPages ? start + (maxPage - 1) : orders.totalPages)})" >
             <ul class="pagination justify-content-center">
