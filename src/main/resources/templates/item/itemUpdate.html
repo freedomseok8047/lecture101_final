@@ -20,7 +20,8 @@
                 onSelect: function(dateText) {
                     // 사용자가 날짜를 선택하면 이 함수가 호출됩니다.
                     // 선택된 날짜를 서버로 보내고 저장 로직을 수행할 수 있습니다.
-                }
+                },
+                dateFormat: 'yy-mm-dd' // 날짜 출력 형식 설정 (yyyy-mm-dd)
             });
 
             // 종료 날짜 선택기 초기화
@@ -28,7 +29,8 @@
                 onSelect: function(dateText) {
                     // 사용자가 날짜를 선택하면 이 함수가 호출됩니다.
                     // 선택된 날짜를 서버로 보내고 저장 로직을 수행할 수 있습니다.
-                }
+                },
+                dateFormat: 'yy-mm-dd' // 날짜 출력 형식 설정 (yyyy-mm-dd)
             });
 
             // 날짜 선택 버튼 클릭 시 시작 날짜 선택기 활성화
@@ -145,7 +147,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">시작 날짜</span>
                 </div>
-                <input type="text" id="classStartDate" name="classStartDate" class="form-control" placeholder="시작 날짜를 선택해주세요">
+                <input type="text" id="classStartDate" name="classStartDate" class="form-control" placeholder="시작 날짜를 선택해주세요" th:value="${itemFormDto.classStartDate}">
             </div>
 
             <!-- 종료 날짜 선택 -->
@@ -153,7 +155,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">종료 날짜</span>
                 </div>
-                <input type="text" id="classEndDate" name="classEndDate" class="form-control" placeholder="종료 날짜를 선택해주세요">
+                <input type="text" id="classEndDate" name="classEndDate" class="form-control" placeholder="종료 날짜를 선택해주세요" th:value="${itemFormDto.classEndDate}">
             </div>
             <!--날짜/시간 추가한 작업 끝 부분-->
 

@@ -498,9 +498,22 @@ a:hover {
     border-top: 1px dashed #ddd;
 }
 
+
 .page-item.active .page-link {
     z-index: 3;
     color: #fff;
     background-color: #66717d;
     border-color: #66717d;
 }
+.page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #50565d;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+
