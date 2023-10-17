@@ -1,13 +1,15 @@
 package com.lecture101.repository;
 
 
+import com.lecture101.entity.Item;
 import com.lecture101.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long>,
-        MemberRepositoryCustom{
+        QuerydslPredicateExecutor<Item>, MemberRepositoryCustom{
 //        QuerydslPredicateExecutor<Member> {
 
     Member findByEmail(String email);

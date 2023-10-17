@@ -20,7 +20,7 @@
             var searchBy = $("#searchBy").val();
             var searchQuery = $("#searchQuery").val();
 
-            location.href="/members/admin/" + page + "?searchDateType=" + searchDateType
+            location.href="/members/admin/search/" + page + "?searchDateType=" + searchDateType
                 + "&searchRole=" + searchRole
                 + "&searchBy=" + searchBy
                 + "&searchQuery=" + searchQuery;
@@ -41,7 +41,7 @@
 <div layout:fragment="content">
     <div class="inner-cont">
         <h2>회원 정보</h2>
-        <form th:action="@{'/members/admin/' + ${members.number}}" role="form" method="get" th:object="${members}">
+        <form th:action="@{'/members/admin' + ${members.number}}" role="form" method="get" th:object="${members}">
         <table class="table">
             <thead>
             <tr>

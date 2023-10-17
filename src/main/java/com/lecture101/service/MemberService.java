@@ -1,9 +1,7 @@
 package com.lecture101.service;
 
 
-import com.lecture101.dto.MemberFormDto;
-import com.lecture101.dto.MemberSearchDto;
-import com.lecture101.dto.MemberUpdateDto;
+import com.lecture101.dto.*;
 import com.lecture101.entity.Member;
 import com.lecture101.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +61,11 @@ public class MemberService implements UserDetailsService {
     public Page<Member> getAdminMemberPage(MemberSearchDto memberSearchDto, Pageable pageable){
         return memberRepository.getAdminMemberPage(memberSearchDto, pageable);
     }
+
+//    @Transactional(readOnly = true)
+//    public Page<MainMemberDto> getMainMemberPage(MemberSearchDto memberSearchDto, Pageable pageable){
+//        return memberRepository.getMainMemberPage(memberSearchDto, pageable);
+//    }
 
     @Transactional(readOnly = true)
     public MemberFormDto getMemberDtl(Long memberId){
