@@ -12,9 +12,7 @@ body {
     line-height: normal;
 }
 /* 1018 9:59 추가 */
-.header {
-    height: 65px;
-}
+
 /* 1018 수정 */
 .content {
     min-height:calc(100% - 165px);

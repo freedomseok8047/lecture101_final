@@ -206,7 +206,7 @@ a:hover {
 /* 1018 수정 */
 .inner-cont {
     max-width: 1200px;
-    margin: 0 auto 0;
+    margin: 65px auto 0;
     padding: 60px 0;
 }
 .inner-cont.member {
