@@ -12,17 +12,19 @@ body {
     line-height: normal;
 }
 /* 1018 9:59 추가 */
-
+.header {
+    position: fixed;
+    top:0;
+    width: 100%;
+    height: 65px;
+    z-index: 99;
+}
 /* 1018 수정 */
 .content {
-    min-height:calc(100% - 165px);
+    min-height:calc(100% - 100px);
 }
 /* 1018 수정 */
 .footer {
-    /*position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;*/
     width: 100%;
     height: 100px;
     padding: 15px 0;
@@ -34,6 +36,3 @@ body {
     font-size: 0.9rem;
     color: #888;
 }
-
-
-
