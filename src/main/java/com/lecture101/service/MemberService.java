@@ -76,6 +76,7 @@ public class MemberService implements UserDetailsService {
     }
     //회원 정보 수정 처리 로직
     public void updateMember(MemberUpdateDto memberUpdateDto , PasswordEncoder passwordEncoder) {
+
         // 어떤 회원의 정보를 업데이트 할지 정해주기 위해
         // 업데이트 할 회원의 정보를 Dto의 id로 조회하여 Entity Member 클래스에 담는다.
         Member existingMember = memberRepository.findById(memberUpdateDto.getId())
@@ -85,7 +86,10 @@ public class MemberService implements UserDetailsService {
         if (memberUpdateDto.getCurrentPassword() != null && !memberUpdateDto.getCurrentPassword().isEmpty()) {
             //existingMember.setPassword(memberUpdateDto.getNewPassword());
             // 원래는 데이터를 하나하나 Set 하려 했는데
-            // Member entity에 updateMember 메서드를 정의해서 한번에 Set
+            // ex) existingMember.setName(memberUpdateDto.getName());
+
+            // 한번에 모든 정보를 새로 Set 할 수 있게
+            // Member entity에 updateMember라는 메서드를 정의
             existingMember.updateMember(memberUpdateDto,passwordEncoder);
         }
     }

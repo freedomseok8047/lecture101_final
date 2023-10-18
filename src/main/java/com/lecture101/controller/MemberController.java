@@ -146,24 +146,20 @@ public class MemberController {
                                String newPassword,
                                String confirmPassword,
                                Model model, Principal principal) {
-
         // 로그인한 회원의 id를 이용해서, db에서 회원정보를 불러옴,
         MemberUpdateDto existingMemberDto = memberService.getMemberDtl2(memberUpdateDto.getId());
         System.out.println("currentPassword : " + currentPassword);
         System.out.println("existingMemberDto.getCurrentPassword() : " + existingMemberDto.getCurrentPassword());
-
         // 1번) 현재 비밀번호 확인 로직
         // 타이핑한 currentPassword 와 db에 있는 기존 memberUpdateDto.getCurrentPassword()
         // .matches 메서드를 이용해서 비교 -> 디비에 있는 비밀번호 데이터는 암호화 되어있음
         // 비교연산자 '==' 로는 비교 불가 -> matches 함수 사용한 이유
-
         if (!passwordEncoder.matches(currentPassword, existingMemberDto.getCurrentPassword())) {
             // 위의 조건이 참이 아니라 거짓이면 에러메시지 뷰로 전달
             model.addAttribute("errorMessage1", "현재 비밀번호가 일치하지 않습니다.");
             model.addAttribute("memberUpdateDto", memberUpdateDto); // 원래의 멤버 정보를 다시 모델에 추가
             return "member/memberUpdate";
         }
-
         // 2번) 새 비밀번호와 새 비밀번호 확인 일치 여부 확인 로직
         if ((newPassword != null && !newPassword.isEmpty()) || bindingResult.hasErrors()) {
             // 새 비밀번호와 새 비밀번호 확인을 equals 함수로 비교
@@ -185,7 +181,7 @@ public class MemberController {
         }
 
         try {
-            // Setting이 끝난 Dto를 실제 업데이트 작업을 하기 위해 서비스로 넘어간다.
+            //  새 비밀번호가 담긴 Dto를 실제 업데이트 작업을 하기 위해 서비스로 보낸다.
                 memberService.updateMember(memberUpdateDto,passwordEncoder);
                 model.addAttribute("updateSuccessMessage", "회원정보가 수정되었습니다.");
         } catch (Exception e) {

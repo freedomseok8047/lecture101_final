@@ -52,8 +52,11 @@ public class Member extends BaseEntity {
         return member;
     }
 
+    // Member ENtity 클래스 내부에 정의된
+    // MemberUpdateDto와 PasswordEncoder를 파라미터로 하는
+    // updateMember 메서드
     public void updateMember(MemberUpdateDto memberUpdateDto, PasswordEncoder passwordEncoder) {
-
+        // Dto로 부터 넘겨받은 정보들을 각각 매핑하여 reset한다.
         this.setName(memberUpdateDto.getName());
         this.setEmail(memberUpdateDto.getEmail());
         this.setAddress(memberUpdateDto.getAddress());
