@@ -9,16 +9,23 @@ body {
     font-size: 1em;
     line-height: normal;
 }
+.content {
+    min-height:100%;
+}
 .footer {
-    /*position: absolute;
+    position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;*/
-    border: 1px solid #ccc;
-    border-width: 1px 0 0 0;
+    bottom: 0;
     width: 100%;
     padding: 15px 0;
     text-align: center;
+    background: #222;
+}
+.footer-copyright {
+    font-family: 'Montserrat', 'Noto Sans KR', 맑은고딕, 'Dotum', 돋움, 'Arial', sans-serif;
+    font-size: 0.9rem;
+    color: #888;
 }
 .content{
     margin-bottom: 60px;

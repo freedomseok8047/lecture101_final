@@ -67,18 +67,6 @@ a:hover {
     z-index: 99;
 }
 
-    /* footer */
-.footer {
-
-    background: #222;
-    border: none;
-}
-.footer-copyright {
-    font-family: 'Montserrat', 'Noto Sans KR', 맑은고딕, 'Dotum', 돋움, 'Arial', sans-serif;
-    font-size: 0.9rem;
-    color: #888;
-}
-
 
 
 /* --------------------------*/
