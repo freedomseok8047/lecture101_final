@@ -76,29 +76,18 @@ public class MemberService implements UserDetailsService {
     }
     //회원 정보 수정 처리 로직
     public void updateMember(MemberUpdateDto memberUpdateDto , PasswordEncoder passwordEncoder) {
+        // 어떤 회원의 정보를 업데이트 할지 정해주기 위해
+        // 업데이트 할 회원의 정보를 Dto의 id로 조회하여 Entity Member 클래스에 담는다.
         Member existingMember = memberRepository.findById(memberUpdateDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
 
-        // 이메일이 변경되었는지 확인하고, 변경되었다면 중복 체크를 수행합니다.
-        // 이메일 readOnly = true 라서 필요없는 부분
-//        if(!existingMember.getEmail().equals(member.getEmail())) {
-//            validateDuplicateMember(member);
-//        }
-
-//        existingMember.setName(memberUpdateDto.getName());
-//        existingMember.setEmail(memberUpdateDto.getEmail());
-//        existingMember.setAddress(memberUpdateDto.getAddress());
-
-        // 비밀번호가 널이 아니고 비어 있지 않다면 업데이트합니다.
+        // 불러온 회원의 비밀번호가 널이 아니고 비어 있지 않다면 업데이트를 진행
         if (memberUpdateDto.getCurrentPassword() != null && !memberUpdateDto.getCurrentPassword().isEmpty()) {
             //existingMember.setPassword(memberUpdateDto.getNewPassword());
-            // 원래는 데이터를 하나하나 넣으려고 했는데 Member entity에
-            // updateMember 메서드를 정의해서 한번에 넣기
+            // 원래는 데이터를 하나하나 Set 하려 했는데
+            // Member entity에 updateMember 메서드를 정의해서 한번에 Set
             existingMember.updateMember(memberUpdateDto,passwordEncoder);
         }
-
-        // 저장하지 않아도, JPA가 트랜잭션 종료 시점에 변경 감지 (Dirty Checking)를 하여 업데이트 쿼리를 실행합니다.
-        // 만약 다른 로직이 추가로 필요하다면 memberRepository.save(existingMember);를 호출하세요.
     }
 
 

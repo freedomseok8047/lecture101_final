@@ -57,10 +57,13 @@ public class Member extends BaseEntity {
         this.setName(memberUpdateDto.getName());
         this.setEmail(memberUpdateDto.getEmail());
         this.setAddress(memberUpdateDto.getAddress());
+        // controller에서 인코딩해서 정보를 넘긴것이 아니라
+        // 그대로 숫자형태로 entity 클래스까지 넘기고
+        // 여기서 인코딩해서 Set!
         String password = passwordEncoder.encode(memberUpdateDto.getNewPassword());
         this.setPassword(password);
 
-
+        // 업데이트 완료!!
     }
 
 

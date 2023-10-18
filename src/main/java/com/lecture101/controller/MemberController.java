@@ -147,39 +147,45 @@ public class MemberController {
                                String confirmPassword,
                                Model model, Principal principal) {
 
-//        Member existingMember = memberService.getMemberDtl2(memberUpdateDto.getId());
-
-        // 로그인한 유저를 이용해서, 디비에서, 이메일을 가져오기, -> 해당 이메일의 비밀번호 가져오기,
+        // 로그인한 회원의 id를 이용해서, db에서 회원정보를 불러옴,
         MemberUpdateDto existingMemberDto = memberService.getMemberDtl2(memberUpdateDto.getId());
         System.out.println("currentPassword : " + currentPassword);
         System.out.println("existingMemberDto.getCurrentPassword() : " + existingMemberDto.getCurrentPassword());
-        // 현재 비밀번호 확인 로직
-        //타이핑한 currentPassword 와 db에 있는 기존 memberUpdateDto.getCurrentPassword()
-        // .matches 메서드를 이용해서 비교
+
+        // 1번) 현재 비밀번호 확인 로직
+        // 타이핑한 currentPassword 와 db에 있는 기존 memberUpdateDto.getCurrentPassword()
+        // .matches 메서드를 이용해서 비교 -> 디비에 있는 비밀번호 데이터는 암호화 되어있음
+        // 비교연산자 '==' 로는 비교 불가 -> matches 함수 사용한 이유
+
         if (!passwordEncoder.matches(currentPassword, existingMemberDto.getCurrentPassword())) {
+            // 위의 조건이 참이 아니라 거짓이면 에러메시지 뷰로 전달
             model.addAttribute("errorMessage1", "현재 비밀번호가 일치하지 않습니다.");
             model.addAttribute("memberUpdateDto", memberUpdateDto); // 원래의 멤버 정보를 다시 모델에 추가
             return "member/memberUpdate";
         }
 
-        // 새 비밀번호와 비밀번호 확인 일치 여부 확인 로직
+        // 2번) 새 비밀번호와 새 비밀번호 확인 일치 여부 확인 로직
         if ((newPassword != null && !newPassword.isEmpty()) || bindingResult.hasErrors()) {
+            // 새 비밀번호와 새 비밀번호 확인을 equals 함수로 비교
+            // 위의 조건이 참이 아니라 거짓이면 에러메시지 뷰로 전달
             if (!newPassword.equals(confirmPassword)) {
                 model.addAttribute("errorMessage2", "비밀번호 확인 : 불일치");
                 model.addAttribute("memberUpdateDto", memberUpdateDto); // 원래의 멤버 정보를 다시 모델에 추가
                 return "member/memberUpdate";
             }
+
             // 비밀번호 2번 인코딩하는 거 같아서 일단 주석
             // -> 2번 인코딩한게 맞앗음
-//            String encodedPassword = passwordEncoder.encode(newPassword);
-//            memberUpdateDto.setNewPassword(encodedPassword);
+            // String encodedPassword = passwordEncoder.encode(newPassword);
+            // memberUpdateDto.setNewPassword(encodedPassword);
 
-            // 새 비밀번호 확인이 끝나면 그대로 Entity 매퍼로 newPassword 정보만 넘기면 됨
+            // 새 비밀번호 확인이 끝나면 Dto에 newPassword 정보를 Set한다.
             memberUpdateDto.setNewPassword(newPassword);
 
         }
 
         try {
+            // Setting이 끝난 Dto를 실제 업데이트 작업을 하기 위해 서비스로 넘어간다.
                 memberService.updateMember(memberUpdateDto,passwordEncoder);
                 model.addAttribute("updateSuccessMessage", "회원정보가 수정되었습니다.");
         } catch (Exception e) {
