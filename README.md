@@ -1,2 +1,3 @@
 # lecture101
-<img width="1235" alt="Screenshot 2024-01-25 at 3 14 46 PM" src="https://github.com/freedomseok8047/lecture101_final/assets/112673222/b4b81c01-a053-4704-88e6-04c6b31f7d77">
+
+![1차 프로젝트 gif 파일](https://github.com/freedomseok8047/lecture101_final/assets/112673222/977c6c4f-9533-4c1d-a40f-f69aa7c652ce)
