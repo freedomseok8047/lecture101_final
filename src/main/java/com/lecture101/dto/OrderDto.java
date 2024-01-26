@@ -17,4 +17,9 @@ public class OrderDto {
     @Max(value = 999, message = "최대 주문 수량은 999개 입니다.")
     private int count;
 
+
+    // 날짜/주문 관련 코드
+    @NotNull(message = "날짜를 선택해야 합니다.")
+    private String selectedDate;
+
 }

@@ -1,23 +1,38 @@
+/* 1018 수정 */
 html {
     position: relative;
-    min-height: 100%;
+    height: 100%;
     margin: 0;
 }
+/* 1018 수정 */
 body {
-    min-height: 100%;
+    height: 100%;
+    font-family: 'Roboto','Noto Sans KR', 맑은고딕, 'Dotum', 돋움, 'Arial', sans-serif;
+    font-size: 1em;
+    line-height: normal;
 }
-.footer {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+/* 1018 9:59 추가 */
+.header {
+    position: fixed;
+    top:0;
     width: 100%;
+    height: 65px;
+    z-index: 99;
+}
+/* 1018 수정 */
+.content {
+    min-height:calc(100% - 100px);
+}
+/* 1018 수정 */
+.footer {
+    width: 100%;
+    height: 100px;
     padding: 15px 0;
     text-align: center;
+    background: #222;
 }
-.content{
-    margin-bottom:100px;
-    margin-top: 50px;
-    margin-left: 200px;
-    margin-right: 200px;
+.footer-copyright {
+    font-family: 'Montserrat', 'Noto Sans KR', 맑은고딕, 'Dotum', 돋움, 'Arial', sans-serif;
+    font-size: 0.9rem;
+    color: #888;
 }

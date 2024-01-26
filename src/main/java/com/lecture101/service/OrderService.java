@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,15 +34,21 @@ public class OrderService {
 
     private final ItemImgRepository itemImgRepository;
 
-    public Long order(OrderDto orderDto, String email){
+    // 날짜/주문 관련 코드
+    public Long order(OrderDto orderDto, String email, LocalDate selectedDate){
 
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
         Member member = memberRepository.findByEmail(email);
 
+
+
         List<OrderItem> orderItemList = new ArrayList<>();
-        OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+
+        // 날짜/주문 관련 코드
+        OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount(), selectedDate);
+
         orderItemList.add(orderItem);
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
@@ -103,7 +110,9 @@ public class OrderService {
             Item item = itemRepository.findById(orderDto.getItemId())
                     .orElseThrow(EntityNotFoundException::new);
 
-            OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+
+            // 날짜/주문 관련 코드
+            OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount(), LocalDate.parse(orderDto.getSelectedDate()));
             orderItemList.add(orderItem);
         }
 

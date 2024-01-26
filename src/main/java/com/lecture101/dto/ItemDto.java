@@ -1,5 +1,6 @@
 package com.lecture101.dto;
 
+import com.lecture101.constant.LectureType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,8 @@ public class ItemDto {
 
     private String itemDetail;
 
+    private LectureType lectureType; // 클래스 타입
+
     private String sellStatCd;
 
     private LocalDateTime regTime;
@@ -24,3 +27,4 @@ public class ItemDto {
     private LocalDateTime updateTime;
 
 }
+

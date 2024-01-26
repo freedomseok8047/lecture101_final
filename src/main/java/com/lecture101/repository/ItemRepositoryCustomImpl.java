@@ -1,5 +1,6 @@
 package com.lecture101.repository;
 
+import com.lecture101.constant.Category;
 import com.lecture101.constant.ItemSellStatus;
 import com.lecture101.dto.ItemSearchDto;
 import com.lecture101.dto.MainItemDto;
@@ -29,6 +30,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
     private BooleanExpression searchSellStatusEq(ItemSellStatus searchSellStatus){
         return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
+    }
+
+    private BooleanExpression searchCategoryEq(Category searchCategory){
+        return searchCategory == null ? null : QItem.item.category.eq(searchCategory);
     }
 
     private BooleanExpression regDtsAfter(String searchDateType){
@@ -68,6 +73,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .selectFrom(QItem.item)
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        searchCategoryEq(itemSearchDto.getSearchCategory()),
                         searchByLike(itemSearchDto.getSearchBy(),
                                 itemSearchDto.getSearchQuery()))
                 .orderBy(QItem.item.id.desc())
@@ -94,6 +100,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .select(
                         new QMainItemDto(
                                 item.id,
+                                item.category,
+                                item.lectureType,
+                                item.itemSellStatus,
                                 item.itemNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,
@@ -114,3 +123,4 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
 }
+
