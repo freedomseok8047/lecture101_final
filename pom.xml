@@ -130,24 +130,13 @@
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
 
+
+
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>2.3.9</version>
         </dependency>
-
-        <!--새로 추가한 Dependency 시작 부분-->
-        <dependency>
-            <groupId>com.ibm.icu</groupId>
-            <artifactId>icu4j</artifactId>
-            <version>4.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ibm.icu</groupId>
-            <artifactId>icu4j</artifactId>
-            <version>4.0.1</version>
-        </dependency>
-        <!--새로 추가한 Dependency 끝 부분-->
 
     </dependencies>
 

@@ -1,17 +1,18 @@
 package com.lecture101.constant;
 
-public enum ItemSellStatus {
+public enum LectureType {
 
-    SELL("강의중"), SOLD_OUT("강의종료");
+    ONE_TO_ONE("1:1 강의"), GROUP("그룹 강의"), ONLINE("온라인 강의");
 
     private final String description;
 
-    ItemSellStatus(String description) {
+    LectureType(String description) {
         this.description = description;
     }
 
     public String getDescription() {
         return description;
     }
-
 }
+
+

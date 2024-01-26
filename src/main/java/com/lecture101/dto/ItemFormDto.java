@@ -1,6 +1,9 @@
 package com.lecture101.dto;
 
+
+import com.lecture101.constant.Category;
 import com.lecture101.constant.ItemSellStatus;
+import com.lecture101.constant.LectureType;
 import com.lecture101.entity.Item;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,25 +21,34 @@ public class ItemFormDto {
 
     private Long id;
 
-    @NotBlank(message = "상품명은 필수 입력 값입니다.")
+    @NotBlank(message = "클래스명은 필수 입력 값 입니다.")
     private String itemNm;
 
     @NotNull(message = "가격은 필수 입력 값입니다.")
     private Integer price;
 
-    @NotBlank(message = "상품 상세는 필수 입력 값입니다.")
+    @NotBlank(message = "클래스 소개는 필수 입력 값 입니다.")
     private String itemDetail;
 
-    @NotNull(message = "재고는 필수 입력 값입니다.")
+    @NotNull(message = "총 인원수는 필수 입력 값입니다.")
     private Integer stockNumber;
 
+    /*현석 파트 시작*/
     //날짜/시간 추가한 작업 시작 부분
     private String classStartDate; // 문자열로 날짜를 저장할 필드
 
     private String classEndDate;
     //날짜/시간 추가한 작업 끝 부분
+    /*현석 파트 끝*/
 
+    @NotNull(message = "클래스 상태는 필수 입력 값입니다.")
     private ItemSellStatus itemSellStatus;
+
+    @NotNull(message = "카테고리는 필수 입력 값입니다.")
+    private Category category;
+
+    @NotNull(message = "클래스 타입은 필수 입력 값입니다.")
+    private LectureType lectureType;
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
@@ -52,7 +64,7 @@ public class ItemFormDto {
         return modelMapper.map(item,ItemFormDto.class);
     }
 
-
+    /*현석 파트 시작*/
     //날짜/시간 추가한 작업 시작 부분
     public void setClassStartDate(String classStartDate) {
         this.classStartDate = classStartDate;
@@ -81,5 +93,6 @@ public class ItemFormDto {
         return null;
     }
     //날짜/시간 추가한 작업 끝 부분
+    /*현석 파트 끝*/
 
 }
